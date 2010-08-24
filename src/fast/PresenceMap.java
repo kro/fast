@@ -22,7 +22,7 @@ public class PresenceMap {
 		this.pMapData = pMapData;
 	}
 	
-	public boolean hasField(int fieldIndex) {
-		return (pMapData[fieldIndex / 7] & (0x40 >> (fieldIndex % 7))) != 0;
+	public boolean isEnabled(int index) {
+		return (pMapData[index / 7] & (0x40 >> (index % 7))) != 0;
 	}
 }

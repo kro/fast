@@ -27,7 +27,7 @@ public class PresenceMapSpec extends Specification<PresenceMap> {
 			byte[] pMapData = {(byte) 0xc0};
 			PresenceMap pMap = new PresenceMap(pMapData);
 			for(int i = 0; i < 7; i++){
-				specify(pMap.hasField(i), must.equal(i == 0));
+				specify(pMap.isEnabled(i), must.equal(i == 0));
 			}
 		}
 		
@@ -35,7 +35,7 @@ public class PresenceMapSpec extends Specification<PresenceMap> {
 			byte[] pMapData = {(byte) 0x01, (byte) 0x84};
 			PresenceMap pMap = new PresenceMap(pMapData);
 			for(int i = 0; i < 14; i++){
-				specify(pMap.hasField(i), must.equal(i == 6 || i == 11));
+				specify(pMap.isEnabled(i), must.equal(i == 6 || i == 11));
 			}
 		}
 	}
