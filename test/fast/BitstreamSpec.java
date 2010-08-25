@@ -22,23 +22,23 @@ import org.junit.runner.RunWith;
 
 @RunWith(JDaveRunner.class)
 public class BitstreamSpec extends Specification<Bitstream> {
-	public class NonEmpty {
-		private Bitstream stream;
+  public class NonEmpty {
+    private Bitstream stream;
 
-		public Bitstream create() {
-			byte[] bytes = { (byte) 0xbf, (byte) 0xff };
-			return stream = new Bitstream(bytes);
-		}
+    public Bitstream create() {
+      byte[] bytes = { (byte) 0xbf, (byte) 0xff };
+      return stream = new Bitstream(bytes);
+    }
 
-		public void readBit() {
-			specify(stream.bit(), must.equal(1));
-			specify(stream.bit(), must.equal(0));
-			specify(stream.bit(), must.equal(1));			
-		}
+    public void readBit() {
+      specify(stream.bit(), must.equal(1));
+      specify(stream.bit(), must.equal(0));
+      specify(stream.bit(), must.equal(1));     
+    }
 
-		public void shouldReadBitsToByte() {
-			specify(stream.bits(7), must.equal(0x5f));
-			specify(stream.bits(7), must.equal(0x7f));
-		}
-	}
+    public void shouldReadBitsToByte() {
+      specify(stream.bits(7), must.equal(0x5f));
+      specify(stream.bits(7), must.equal(0x7f));
+    }
+  }
 }

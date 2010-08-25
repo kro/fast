@@ -18,22 +18,22 @@ package fast;
 import java.nio.ByteBuffer;
 
 public class Bitstream {
-	private final ByteBuffer buffer;
-	private int offset = 0;
+  private final ByteBuffer buffer;
+  private int offset = 0;
 
-	public Bitstream(byte[] bytes) {
-		buffer = ByteBuffer.wrap(bytes);
-	}
+  public Bitstream(byte[] bytes) {
+    buffer = ByteBuffer.wrap(bytes);
+  }
 
-	public byte bit() {
-		byte currentByte = buffer.get(offset / 8);
-		return (byte) (currentByte >> (7 - offset++ % 8) & 1);
-	}
+  public byte bit() {
+    byte currentByte = buffer.get(offset / 8);
+    return (byte) (currentByte >> (7 - offset++ % 8) & 1);
+  }
 
-	public byte bits(int numBitsToRead) {
-		byte result = 0;
-		while (numBitsToRead-- > 0)
-			result = (byte) (result << 1 | bit());
-		return result;
-	}
+  public byte bits(int numBitsToRead) {
+    byte result = 0;
+    while (numBitsToRead-- > 0)
+      result = (byte) (result << 1 | bit());
+    return result;
+  }
 }

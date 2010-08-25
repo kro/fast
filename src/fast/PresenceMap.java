@@ -16,16 +16,16 @@
 package fast;
 
 public class PresenceMap {
-	private final byte[] pMapData; 
-	
-	public PresenceMap(byte[] pMapData){
-		this.pMapData = pMapData;
-	}
-	
-	public boolean isEnabled(int index) {
-		int offset = index / 7;
-		if (offset >= pMapData.length)
-			return false;	
-		return (pMapData[offset] & (0x40 >> (index % 7))) != 0;
-	}
+  private final byte[] pMapData; 
+  
+  public PresenceMap(byte[] pMapData){
+    this.pMapData = pMapData;
+  }
+  
+  public boolean isEnabled(int index) {
+    int offset = index / 7;
+    if (offset >= pMapData.length)
+      return false; 
+    return (pMapData[offset] & (0x40 >> (index % 7))) != 0;
+  }
 }
