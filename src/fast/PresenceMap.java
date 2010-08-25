@@ -23,6 +23,9 @@ public class PresenceMap {
 	}
 	
 	public boolean isEnabled(int index) {
-		return (pMapData[index / 7] & (0x40 >> (index % 7))) != 0;
+		int offset = index / 7;
+		if (offset >= pMapData.length)
+			return false;	
+		return (pMapData[offset] & (0x40 >> (index % 7))) != 0;
 	}
 }
