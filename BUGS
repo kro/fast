@@ -1,2 +1,5 @@
 - PresenceMap#isEnabled causes an IndexOutOfBoundsException if the index is too
   big. Validation of the index should be carried out.
+
+- Zero-preamble part for ASCII Strings [FAST Specification 10.6.3] has not been
+  implemented.
