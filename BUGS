@@ -3,3 +3,6 @@
 
 - Zero-preamble part for ASCII Strings [FAST Specification 10.6.3] has not been
   implemented.
+
+- Sequence application type does not conform to the definition of Sequence in
+  FAST Specification.
