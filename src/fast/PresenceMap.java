@@ -15,17 +15,29 @@
  */
 package fast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PresenceMap {
-  private final byte[] pMapData; 
-  
-  public PresenceMap(byte[] pMapData){
+  private final byte[] pMapData;
+  private final Map<Elem<?>, Integer> slots = new HashMap<Elem<?>, Integer>();
+
+  public PresenceMap(byte[] pMapData) {
     this.pMapData = pMapData;
   }
-  
-  public boolean isEnabled(int index) {
-    int offset = index / 7;
+
+  public boolean isPresent(int slot) {
+    int offset = slot / 7;
     if (offset >= pMapData.length)
-      return false; 
-    return (pMapData[offset] & (0x40 >> (index % 7))) != 0;
+      return false;
+    return (pMapData[offset] & (0x40 >> (slot % 7))) != 0;
+  }
+
+  public boolean isPresent(Elem<?> elem) {
+    return isPresent(slots.get(elem));
+  }
+  
+  public void bind(Elem<?> elem, int slot) {
+    slots.put(elem, slot);
   }
 }
