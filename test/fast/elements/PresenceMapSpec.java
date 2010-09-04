@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fast;
+package fast.elements;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-
-import fast.PresenceMap;
 
 @RunWith(JDaveRunner.class)
 public class PresenceMapSpec extends Specification<PresenceMap> {

@@ -18,6 +18,8 @@ package fast;
 import java.util.HashMap;
 import java.util.Map;
 
+import fast.elements.Elem;
+
 /** A previous value dictionary as specified in FAST Specification version 1.1,
  * section 6.1.3. */
 public class Dictionary {  

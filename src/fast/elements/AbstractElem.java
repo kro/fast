@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fast;
+package fast.elements;
 
 import java.nio.ByteBuffer;
 
+import fast.Dictionary;
 import fast.operators.FieldOperator;
 import fast.types.Type;
 

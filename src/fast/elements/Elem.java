@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fast;
+package fast.elements;
 
 import java.nio.ByteBuffer;
+
+import fast.Dictionary;
 
 /** An element in a FAST message, which can be of type Presence Map, Template
  * Identifier, or a field. */

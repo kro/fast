@@ -19,7 +19,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import fast.PresenceMap;
+import fast.elements.PresenceMap;
 
 public class PresenceMapType extends Type<PresenceMap> {
   public static final PresenceMapType TYPE = new PresenceMapType();
