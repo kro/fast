@@ -6,3 +6,8 @@
 
 - Sequence application type does not conform to the definition of Sequence in
   FAST Specification.
+
+- Fields without a pre-defined max length and without the stop bit will
+  essentially cause an infinite loop.
+
+- Optionality of fields cannot be defined.
