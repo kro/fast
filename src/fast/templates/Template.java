@@ -21,6 +21,7 @@ import java.util.List;
 
 import fast.Dictionary;
 import fast.FieldContainer;
+import fast.EncodeMethod;
 
 import fast.elements.Field;
 import fast.elements.PresenceMap;
@@ -42,6 +43,11 @@ public abstract class Template<T extends FieldContainer> {
     for (Field<?> field : fields)
       result.set(field, field.decode(buffer, pmap, dictionary));
     return result;
+  }
+
+  public void encode(ByteBuffer buffer, FieldContainer container, EncodeMethod method) {
+    for (Field<?> field : fields)
+      field.encode(buffer, container.get(field), method);
   }
 
   protected abstract T newFieldContainer();
