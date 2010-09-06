@@ -21,6 +21,8 @@ import fast.types.AsciiString;
 
 public class Elements {
   public static final Field<String> TEXT = new Text("Text");
+  public static final Field<String> USERNAME = new Text("Username", 6);
+  public static final Field<String> PASSWORD = new Text("Password", 10);
   public static final Field<String> SESSION = new Text("Session", 10);
   public static final Field<String> SEQUENCE_NUMBER = new Text("SequenceNumber", 10);
   public static final Field<String> REJECTED_REASON_CODE = new Text("RejectedReasonCode");
