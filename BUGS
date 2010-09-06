@@ -11,3 +11,5 @@
   essentially cause an infinite loop.
 
 - Optionality of fields cannot be defined.
+
+- SOUP element 'SEQUENCE' should be a numeric, not an alphanumeric.
