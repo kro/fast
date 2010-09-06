@@ -18,6 +18,7 @@ package fast.elements;
 import java.nio.ByteBuffer;
 
 import fast.Dictionary;
+import fast.EncodeMethod;
 import fast.operators.FieldOperator;
 import fast.types.Type;
 
@@ -56,5 +57,9 @@ public abstract class AbstractElem<T> implements Elem<T> {
         dictionary.put(AbstractElem.this, value);
       }
     });
+  }
+
+  public void encode(ByteBuffer buffer, Object value, EncodeMethod method) {
+    throw new UnsupportedOperationException();
   }
 }
