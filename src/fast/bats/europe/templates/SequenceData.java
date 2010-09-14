@@ -19,6 +19,7 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
+import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 import fast.templates.SequenceTemplate;
 
@@ -48,6 +49,7 @@ public class SequenceData extends MessageTemplate {
   };
   
   private SequenceData() {
+    super(PacketType.SEQUENCE_DATA);
     add(Elements.TIME_SECONDS);
     add(Elements.TIME_MILLISECONDS);
     add(Elements.MESSAGE_TYPE);

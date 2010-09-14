@@ -16,6 +16,7 @@
 package fast.soup.templates;
 
 import fast.soup.Elements;
+import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 
 /** Template for Login Rejected message as specified in Soup TCP 2.0, section
@@ -24,6 +25,7 @@ public class LoginRejected extends MessageTemplate {
   public static final LoginRejected TEMPLATE = new LoginRejected();
 
   private LoginRejected() {
+    super(PacketType.LOGIN_REJECTED);
     add(Elements.REJECTED_REASON_CODE);
   }
 }

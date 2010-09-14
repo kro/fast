@@ -16,6 +16,7 @@
 package fast.soup.templates;
 
 import fast.soup.Elements;
+import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 
 /** Template for Debug message as specified in Soup TCP 2.0, section 2.1. */
@@ -23,6 +24,7 @@ public class Debug extends MessageTemplate {
   public static final Debug TEMPLATE = new Debug();
   
   private Debug(){
+    super(PacketType.DEBUG);
     add(Elements.TEXT);
   }
 }

@@ -18,8 +18,19 @@ package fast.templates;
 import fast.Message;
 
 public class MessageTemplate extends Template<Message> {
+  private final String packetType;
+  
+  public MessageTemplate(String packetType) {
+    this.packetType = packetType;
+  }
+
+  public final String getPacketType() {
+    return packetType;
+  }
+  
   @Override
   protected Message newFieldContainer() {
     return new Message();
   }
+
 }

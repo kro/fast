@@ -16,6 +16,7 @@
 package fast.soup.templates;
 
 import fast.soup.Elements;
+import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 
 /** Template for Login Accepted message as specified in Soup TCP 2.0, section
@@ -24,6 +25,7 @@ public class LoginAccepted extends MessageTemplate {
   public static final LoginAccepted TEMPLATE = new LoginAccepted();
 
   public LoginAccepted() {
+    super(PacketType.LOGIN_ACCEPTED);
     add(Elements.SESSION);
     add(Elements.SEQUENCE_NUMBER);
   }

@@ -15,10 +15,17 @@
  */
 package fast.soup.templates;
 
+import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 
-/** Template for End of Session market message as specified in Soup TCP 2.0,
- * section 1.4. */
+/**
+ * Template for End of Session market message as specified in Soup TCP 2.0,
+ * section 1.4.
+ */
 public class EndOfSession extends MessageTemplate {
   public static final MessageTemplate TEMPLATE = new EndOfSession();
+
+  public EndOfSession() {
+    super(PacketType.END_OF_SESSION);
+  }
 }

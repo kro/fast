@@ -15,10 +15,17 @@
  */
 package fast.soup.templates;
 
+import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 
-/** Template for Server Heartbeat message as specified in Soup TCP 2.0, section
- * 2.2.4. */
+/**
+ * Template for Server Heartbeat message as specified in Soup TCP 2.0, section
+ * 2.2.4.
+ */
 public class ServerHeartbeat extends MessageTemplate {
   public static final ServerHeartbeat TEMPLATE = new ServerHeartbeat();
+
+  public ServerHeartbeat() {
+    super(PacketType.SERVER_HEARTBEAT);
+  }
 }
