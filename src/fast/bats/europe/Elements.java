@@ -17,17 +17,13 @@ package fast.bats.europe;
 
 import fast.elements.Elem;
 import fast.elements.Field;
-
 import fast.operators.CopyOp;
-import fast.operators.NoneOp;
-
+import fast.soup.PacketType;
 import fast.types.AsciiString;
 import fast.types.UnsignedInt32;
 
-import fast.soup.TemplateIdentifier;
-
 public class Elements {
-  public static final Elem<String> TEMPLATE_IDENTIFIER = TemplateIdentifier.ELEM;
+  public static final Elem<String> TEMPLATE_IDENTIFIER = PacketType.ELEM;
   
   public static final Field<Long> TIME_SECONDS = new LongField("TimeSeconds");
   public static final Field<Long> TIME_MILLISECONDS = new LongField("TimeMilliseconds");

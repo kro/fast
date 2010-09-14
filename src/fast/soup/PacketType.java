@@ -17,17 +17,18 @@ package fast.soup;
 
 import fast.operators.DefaultOp;
 
-public class TemplateIdentifier extends fast.elements.TemplateIdentifier {
-  public static final TemplateIdentifier ELEM = new TemplateIdentifier();
+public class PacketType extends fast.elements.TemplateIdentifier {
+  public static final PacketType ELEM = new PacketType();
 
   public static final String SEQUENCE_DATA = "S";
   public static final String SERVER_HEARTBEAT = "H";
   public static final String DEBUG = "+";
   public static final String LOGIN_ACCEPTED = "A";
   public static final String LOGIN_REJECTED = "J";
+  public static final String LOGIN_REQUEST = "L";
   public static final String END_OF_SESSION = "Z";
 
-  private TemplateIdentifier() {
+  private PacketType() {
     super(new DefaultOp<String>(SEQUENCE_DATA));
   }
 }

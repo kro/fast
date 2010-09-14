@@ -26,7 +26,7 @@ import fast.Dictionary;
 import fast.Message;
 import fast.elements.PresenceMap;
 
-import fast.soup.TemplateIdentifier;
+import fast.soup.PacketType;
 import fast.soup.templates.Debug;
 import fast.soup.templates.EndOfSession;
 import fast.soup.templates.LoginAccepted;
@@ -43,12 +43,12 @@ public class FastPitchMessageParser implements MessageParser<FastPitchMessage> {
   private Map<String, MessageTemplate> decoders = new HashMap<String, MessageTemplate>() {
     private static final long serialVersionUID = 1L;
     {
-      put(TemplateIdentifier.SEQUENCE_DATA, SequenceData.TEMPLATE);
-      put(TemplateIdentifier.DEBUG, Debug.TEMPLATE);
-      put(TemplateIdentifier.END_OF_SESSION, EndOfSession.TEMPLATE);
-      put(TemplateIdentifier.LOGIN_ACCEPTED, LoginAccepted.TEMPLATE);
-      put(TemplateIdentifier.LOGIN_REJECTED, LoginRejected.TEMPLATE);
-      put(TemplateIdentifier.SERVER_HEARTBEAT, ServerHeartbeat.TEMPLATE);
+      put(PacketType.SEQUENCE_DATA, SequenceData.TEMPLATE);
+      put(PacketType.DEBUG, Debug.TEMPLATE);
+      put(PacketType.END_OF_SESSION, EndOfSession.TEMPLATE);
+      put(PacketType.LOGIN_ACCEPTED, LoginAccepted.TEMPLATE);
+      put(PacketType.LOGIN_REJECTED, LoginRejected.TEMPLATE);
+      put(PacketType.SERVER_HEARTBEAT, ServerHeartbeat.TEMPLATE);
     }
   };
 
@@ -59,7 +59,7 @@ public class FastPitchMessageParser implements MessageParser<FastPitchMessage> {
 
   private Message decode(ByteBuffer buffer) {
     PresenceMap pmap = PresenceMapFactory.create(buffer);
-    String identifier = TemplateIdentifier.ELEM.decode(buffer, pmap, dictionary);
+    String identifier = PacketType.ELEM.decode(buffer, pmap, dictionary);
     MessageTemplate template = decoders.get(identifier);
     if (template == null)
       throw new RuntimeException("unknown template identifer: " + identifier);
