@@ -15,14 +15,6 @@
  */
 package fast.bats.europe.templates;
 
-import fast.bats.europe.Elements;
-import fast.templates.SequenceTemplate;
-
-public class OrderCancel extends SequenceTemplate {
-  public static final OrderCancel TEMPLATE = new OrderCancel();
-
-  protected OrderCancel() {
-    add(OrderId.TEMPLATE);
-    add(Elements.SHARES);
-  }
+public class OrderCancelLongForm extends OrderCancel {
+  public static final OrderCancelLongForm TEMPLATE = new OrderCancelLongForm();
 }

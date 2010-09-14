@@ -40,6 +40,7 @@ public class SequenceData extends MessageTemplate {
       put("d", AddOrder.TEMPLATE);
       put("a", AddOrderLongForm.TEMPLATE);
       put("X", OrderCancel.TEMPLATE);
+      put("x", OrderCancelLongForm.TEMPLATE);
       put("E", OrderExecuted.TEMPLATE);
       put("e", OrderExecutedLongForm.TEMPLATE);
       put("P", Trade.TEMPLATE);
