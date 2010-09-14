@@ -15,17 +15,24 @@
  */
 package fast.operators;
 
-/** A default field operator as specified in FAST Specification version 1.1,
- * section 6.3.4. */
-public class DefaultOp<T> implements FieldOperator<T>{
-  private final T value;
+import jdave.junit4.JDaveRunner;
 
-  public DefaultOp(T value) {
-    this.value = value;
+import org.junit.runner.RunWith;
+
+import fast.operators.FieldOperator.Visitor;
+
+@RunWith(JDaveRunner.class)
+public class DefaultOpSpec extends AbstractFieldOperatorSpec<DefaultOp<Object>> {
+  private Object defaultValue = new Object();
+  
+  @Override
+  protected void fieldIsNotPresent(Visitor<Object> visitor) {
+    Object result = getOperator().apply(visitor);
+    specify(result, must.equal(defaultValue));
   }
 
   @Override
-  public T apply(Visitor<T> visitor) {
-    return visitor.isPresent() ? visitor.decode() : value;
+  protected DefaultOp<Object> getOperator() {
+    return new DefaultOp<Object>(defaultValue);
   }
 }
