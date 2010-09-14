@@ -67,6 +67,7 @@
         <formatter type="plain" usefile="false"/>
         <fileset dir="${test.src}">
           <include name="**/*Spec.java"/>
+          <exclude name="**/Abstract*Spec.java"/>
         </fileset>
       </batchtest>
     </junit>
