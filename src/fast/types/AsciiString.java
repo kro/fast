@@ -25,7 +25,8 @@ public class AsciiString extends Type<String> {
   @Override
   public ByteBuffer encode(String string) {
     byte[] bytes = string.getBytes();
-    assert (!containsStopBit(bytes));
+    if (containsStopBit(bytes))
+      throw new IllegalArgumentException("Argument contains stop bit (FAST Specification: ERR D11)");
     bytes[bytes.length - 1] = addStopBit(bytes[bytes.length - 1]);
     return ByteBuffer.wrap(bytes);
   }
