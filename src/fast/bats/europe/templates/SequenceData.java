@@ -44,6 +44,7 @@ public class SequenceData extends MessageTemplate {
       put("E", OrderExecuted.TEMPLATE);
       put("e", OrderExecutedLongForm.TEMPLATE);
       put("P", Trade.TEMPLATE);
+      put("p", TradeLongForm.TEMPLATE);
       put("r", Trade.TEMPLATE);
       put("B", TradeBreak.TEMPLATE);
     }
@@ -66,7 +67,7 @@ public class SequenceData extends MessageTemplate {
   private Sequence marketDataSequence(ByteBuffer buffer, PresenceMap pmap, Message message, Dictionary dictionary) {
     SequenceTemplate template = sequenceDataTemplates.get(messageType(message));
     if (template == null)
-      throw new RuntimeException("unknown message type: " + messageType(message));
+      throw new RuntimeException("unknown message type: \"" + messageType(message) + "\"");
     return template.decode(buffer, pmap, dictionary);
   }
 
