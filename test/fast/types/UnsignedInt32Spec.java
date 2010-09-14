@@ -21,11 +21,11 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
-import fast.FastSpecification;
+import fast.AbstractFastSpec;
 import fast.types.UnsignedInt32;
 
 @RunWith(JDaveRunner.class)
-public class UnsignedInt32Spec extends FastSpecification<UnsignedInt32> {
+public class UnsignedInt32Spec extends AbstractFastSpec<UnsignedInt32> {
   public class Initialized {
     public void validDecode() {
       byte[] bytes = toByteArray(0x2, 0x61, 0x15, 0xee);

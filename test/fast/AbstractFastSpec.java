@@ -17,7 +17,7 @@ package fast;
 
 import jdave.Specification;
 
-public class FastSpecification<T> extends Specification<T> {
+public abstract class AbstractFastSpec<T> extends Specification<T> {
   public byte[] toByteArray(int... data) {
     byte[] bytes = new byte[data.length];
     for (int i = 0; i < data.length; i++) {
