@@ -15,12 +15,11 @@
  */
 package fast.bats.europe.session;
 
-import silvertip.Connection;
 import java.nio.ByteBuffer;
 
-import fast.EncodeMethod;
+import silvertip.Connection;
+import fast.Encoder;
 import fast.Message;
-
 import fast.soup.Elements;
 import fast.soup.templates.LoginRequest;
 import fast.templates.MessageTemplate;
@@ -28,7 +27,12 @@ import fast.templates.MessageTemplate;
 public class Session {
   private static final String SESSION = "6";
   private static final String SEQUENCE_NUMBER = "0";
-
+  private final Encoder encoder;
+  
+  public Session(Encoder encoder){
+    this.encoder = encoder;
+  }
+  
   public void login(Connection connection, String username, String password) {
     Message message = new Message();
     message.set(Elements.USERNAME, username);
@@ -39,8 +43,7 @@ public class Session {
   }
 
   private void send(Connection connection, MessageTemplate template, Message message) {
-    ByteBuffer buffer = ByteBuffer.allocate(4096);
-    template.encode(buffer, message, EncodeMethod.SOUP_TCP_2_0);
+    ByteBuffer buffer = encoder.encode(message, template);
     connection.send(new silvertip.Message(bytes(buffer)));
   }
 
