@@ -17,7 +17,6 @@ package fast.soup;
 
 import java.nio.ByteBuffer;
 
-import fast.EncodeMethod;
 import fast.Encoder;
 import fast.Message;
 import fast.templates.MessageTemplate;
@@ -26,7 +25,7 @@ public class SoupTCP2Encoder implements Encoder {
   @Override
   public ByteBuffer encode(Message message, MessageTemplate template) {
     ByteBuffer buffer = ByteBuffer.allocate(1024);
-    template.encode(buffer, message, EncodeMethod.SOUP_TCP_2_0);
+    template.encode(buffer, message, this);
     return buffer;
   }
 }

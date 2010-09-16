@@ -20,9 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fast.Dictionary;
+import fast.Encoder;
 import fast.FieldContainer;
-import fast.EncodeMethod;
-
 import fast.elements.Field;
 import fast.elements.PresenceMap;
 
@@ -45,9 +44,9 @@ public abstract class Template<T extends FieldContainer> {
     return result;
   }
 
-  public void encode(ByteBuffer buffer, FieldContainer container, EncodeMethod method) {
+  public void encode(ByteBuffer buffer, FieldContainer container, Encoder encoder) {
     for (Field<?> field : fields)
-      field.encode(buffer, container.get(field), method);
+      field.encode(buffer, container.get(field), encoder);
   }
 
   protected abstract T newFieldContainer();

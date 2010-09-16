@@ -17,12 +17,12 @@ package fast.elements;
 
 import java.nio.ByteBuffer;
 
-import fast.EncodeMethod;
 import fast.Dictionary;
+import fast.Encoder;
 
 /** An element in a FAST message, which can be of type Presence Map, Template
  * Identifier, or a field. */
 public interface Elem<T> {
   T decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary);
-  void encode(ByteBuffer buffer, Object value, EncodeMethod method);
+  void encode(ByteBuffer buffer, Object value, Encoder encoder);
 }
