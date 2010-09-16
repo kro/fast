@@ -35,6 +35,8 @@ public abstract class Type<T> {
     return decode(buffer, Integer.MAX_VALUE);
   }
 
+  public abstract byte[] getBytes(T value);
+  
   public final T decode(ByteBuffer buffer, int maxLength) {
     Decoder<T> decoder = createDecoder();
     int startPosition = buffer.position();

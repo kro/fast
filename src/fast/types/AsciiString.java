@@ -32,6 +32,11 @@ public class AsciiString extends Type<String> {
   }
 
   @Override
+  public byte[] getBytes(String value) {
+    return value.getBytes(); 
+  }
+  
+  @Override
   protected Decoder<String> createDecoder() {
     return new Decoder<String>() {
       StringBuffer output = new StringBuffer();

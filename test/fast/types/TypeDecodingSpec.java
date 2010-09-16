@@ -81,5 +81,10 @@ public class TypeDecodingSpec extends Specification<Type<String>> {
     public ByteBuffer encode(String value) {
       throw new RuntimeException("Only decode is tested");
     }
+
+    @Override
+    public byte[] getBytes(String value) {
+      throw new RuntimeException("Only decode is tested");
+    }
   }
 }

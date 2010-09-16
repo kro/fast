@@ -52,4 +52,9 @@ public class UnsignedInt32 extends Type<Long> {
       }
     };
   }
+
+  @Override
+  public byte[] getBytes(Long value) {
+    return value.toString().getBytes();
+  }
 }

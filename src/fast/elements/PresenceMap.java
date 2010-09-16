@@ -40,4 +40,8 @@ public class PresenceMap {
   public void bind(Elem<?> elem, int slot) {
     slots.put(elem, slot);
   }
+
+  public byte[] getBytes() {
+    return pMapData;
+  }
 }

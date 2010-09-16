@@ -48,4 +48,9 @@ public class PresenceMapType extends Type<PresenceMap> {
   public ByteBuffer encode(PresenceMap value) {
     throw new UnsupportedOperationException();
   }
+
+  @Override
+  public byte[] getBytes(PresenceMap value) {
+    return value.getBytes();
+  }
 }
