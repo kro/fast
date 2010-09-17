@@ -18,12 +18,13 @@ package fast.elements;
 import java.nio.ByteBuffer;
 
 import fast.Dictionary;
-import fast.Encoder;
 import fast.operators.FieldOperator;
 import fast.types.Type;
 
-/** An element in a FAST message, which can be of type Presence Map, Template
- * Identifier, or a field. */
+/**
+ * An element in a FAST message, which can be of type Presence Map, Template
+ * Identifier, or a field.
+ */
 public abstract class AbstractElem<T> implements Elem<T> {
   private final Type<T> type;
   private final FieldOperator<T> operator;
@@ -39,27 +40,27 @@ public abstract class AbstractElem<T> implements Elem<T> {
     this(type, operator, Integer.MAX_VALUE);
   }
 
-  public T decode(final ByteBuffer buffer, final PresenceMap pmap, final Dictionary dictionary) {   
+  public T decode(final ByteBuffer buffer, final PresenceMap pmap, final Dictionary dictionary) {
     return operator.apply(new FieldOperator.Visitor<T>() {
-      @Override public boolean isPresent() {
+      @Override
+      public boolean isPresent() {
         return pmap.isPresent(AbstractElem.this);
       }
-      
-      @Override public T decode() {
+
+      @Override
+      public T decode() {
         return type.decode(buffer, maxLength);
       }
-      
-      @Override public T getPreviousValue() {
+
+      @Override
+      public T getPreviousValue() {
         return (T) dictionary.get(AbstractElem.this);
       }
-      
-      @Override public void setAsPreviousValue(T value) {
+
+      @Override
+      public void setAsPreviousValue(T value) {
         dictionary.put(AbstractElem.this, value);
       }
     });
-  }
-
-  public void encode(ByteBuffer buffer, Object value, Encoder encoder) {
-    throw new UnsupportedOperationException();
   }
 }
