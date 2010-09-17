@@ -36,12 +36,12 @@ public class Elements {
   public static final Field<Long> PRICE_1 = new LongField("Price.1");
   public static final Field<String> PRICE_2 = new StringField("Price.2");
   public static final Field<Long> SHARES = new LongField("Shares");
-  public static final Field<String> SIDE = new StringField("Side");
+  public static final Field<String> SIDE = new CharField("Side");
   public static final Field<String> EXECUTION_ID_1 = new StringField("ExecutionId.1");
   public static final Field<String> EXECUTION_ID_2 = new StringField("ExecutionId.2");
   public static final Field<String> EXECUTION_ID_3 = new StringField("ExecutionId.3");
   public static final Field<Long> EXECUTION_ID_4 = new LongField("ExecutionId.4");
-  public static final Field<String> DISPLAY = new StringField("Display");
+  public static final Field<String> DISPLAY = new CharField("Display");
   public static final Field<Long> LONG_SHARES = new LongField("LongShares");
   public static final Field<String> LONG_PRICE_1 = new StringField("LongPrice.1");
   public static final Field<Long> LONG_PRICE_2 = new LongField("LongPrice.2");
