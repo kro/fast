@@ -31,12 +31,12 @@ public abstract class Template<T extends FieldContainer> {
   protected void add(Field<?> field) {
     fields.add(field);
   }
-  
+
   protected void add(Template<?> template) {
-    for(Field<?> field : template.fields)
+    for (Field<?> field : template.fields)
       add(field);
   }
-  
+
   public T decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) {
     T result = newFieldContainer();
     for (Field<?> field : fields)
@@ -44,10 +44,10 @@ public abstract class Template<T extends FieldContainer> {
     return result;
   }
 
+  protected abstract T newFieldContainer();
+
   public void encode(ByteBuffer buffer, FieldContainer container, Encoder encoder) {
     for (Field<?> field : fields)
-      field.encode(buffer, container.get(field), encoder);
+      encoder.encode(container, field, buffer);
   }
-
-  protected abstract T newFieldContainer();
 }
