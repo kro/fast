@@ -18,7 +18,9 @@ package fast.soup;
 import java.nio.ByteBuffer;
 
 import fast.Encoder;
+import fast.FieldContainer;
 import fast.Message;
+import fast.elements.Field;
 import fast.templates.MessageTemplate;
 
 public class SoupTCP2Encoder implements Encoder {
@@ -27,5 +29,10 @@ public class SoupTCP2Encoder implements Encoder {
     ByteBuffer buffer = ByteBuffer.allocate(1024);
     template.encode(buffer, message, this);
     return buffer;
+  }
+
+  @Override
+  public void encode(FieldContainer container, Field<?> field, ByteBuffer buffer) {
+    throw new UnsupportedOperationException();
   }
 }

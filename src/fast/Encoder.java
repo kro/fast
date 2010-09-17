@@ -17,8 +17,11 @@ package fast;
 
 import java.nio.ByteBuffer;
 
+import fast.elements.Field;
 import fast.templates.MessageTemplate;
 
 public interface Encoder {
   ByteBuffer encode(Message message, MessageTemplate template);
+
+  void encode(FieldContainer container, Field<?> field, ByteBuffer buffer);
 }
