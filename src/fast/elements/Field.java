@@ -15,15 +15,22 @@
  */
 package fast.elements;
 
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+
 import fast.operators.FieldOperator;
 import fast.types.Type;
 
 abstract public class Field<T> extends AbstractElem<T> {
   private final String name;
+  private final Type<T> type;
+  private int maxLength = Integer.MAX_VALUE;
 
   protected Field(String name, Type<T> type, FieldOperator<T> operator, int maxLength) {
     super(type, operator, maxLength);
     this.name = name;
+    this.type = type;
+    this.maxLength = maxLength;
   }
 
   protected Field(String name, Type<T> type, FieldOperator<T> operator) {
@@ -32,5 +39,22 @@ abstract public class Field<T> extends AbstractElem<T> {
 
   public String getName() {
     return name;
+  }
+
+  /**
+   * @return value as bytes padded to right if maxLenght is less than
+   *         Integer.MAX_VALUE
+   */
+  public byte[] getBytes(T value) {
+    byte[] valueAsBytes = type.getBytes(value);
+    if(maxLength == Integer.MAX_VALUE) return valueAsBytes;
+    return padded(valueAsBytes);
+  }
+
+  private byte[] padded(byte[] valueAsBytes) {
+    ByteBuffer buffer = ByteBuffer.allocate(maxLength);
+    Arrays.fill(buffer.array(), (byte) ' ');
+    buffer.put(valueAsBytes);
+    return buffer.array();
   }
 }

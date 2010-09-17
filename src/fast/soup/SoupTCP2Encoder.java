@@ -34,6 +34,6 @@ public class SoupTCP2Encoder implements Encoder {
 
   @Override
   public void encode(FieldContainer container, Field<?> field, ByteBuffer buffer) {
-    throw new UnsupportedOperationException();
+    container.addBytes(field, buffer);
   }
 }

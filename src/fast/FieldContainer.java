@@ -15,6 +15,7 @@
  */
 package fast;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -31,10 +32,14 @@ public abstract class FieldContainer {
   public Set<Field<?>> getFields() {
     return values.keySet();
   }
-  
+
   @SuppressWarnings("unchecked")
   public <T> T get(Field<T> field) {
     return (T) values.get(field);
+  }
+
+  public <T> void addBytes(Field<T> field, ByteBuffer out) {
+    out.put(field.getBytes(get(field)));
   }
 
   @Override
