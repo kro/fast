@@ -28,6 +28,7 @@ public class SoupTCP2Encoder implements Encoder {
   public ByteBuffer encode(Message message, MessageTemplate template) {
     ByteBuffer buffer = ByteBuffer.allocate(1024);
     template.encode(buffer, message, this);
+    buffer.put((byte) '\n');
     return buffer;
   }
 
