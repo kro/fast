@@ -16,7 +16,10 @@
 package fast;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,7 +48,9 @@ public abstract class FieldContainer {
   @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder(" ");
-    for (Field<?> field : values.keySet()) {
+    List<Field<?>> fieldsInOrder = new ArrayList<Field<?>>(values.keySet());
+    Collections.sort(fieldsInOrder);
+    for (Field<?> field : fieldsInOrder) {
       stringBuilder.append(field.getName() + " = " + values.get(field) + " ");
     }
     return stringBuilder.toString();
