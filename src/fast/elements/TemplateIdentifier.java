@@ -22,6 +22,6 @@ import fast.types.AsciiString;
  * 10.3. */
 public class TemplateIdentifier extends AbstractElem<String> {
   public TemplateIdentifier(FieldOperator<String> operator) {
-    super(AsciiString.TYPE, operator);
+    super(AsciiString.TYPE, operator, 1);
   }
 }
