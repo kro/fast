@@ -32,8 +32,8 @@ public class Session {
   public Session(Encoder encoder){
     this.encoder = encoder;
   }
-  
-  public void login(Connection connection, String username, String password) {
+
+  public void login(Connection<?> connection, String username, String password) {
     Message message = new Message();
     message.set(Elements.USERNAME, username);
     message.set(Elements.PASSWORD, password);
@@ -42,7 +42,7 @@ public class Session {
     send(connection, LoginRequest.TEMPLATE, message);
   }
 
-  private void send(Connection connection, MessageTemplate template, Message message) {
+  private void send(Connection<?> connection, MessageTemplate template, Message message) {
     ByteBuffer buffer = encoder.encode(message, template);
     connection.send(new silvertip.Message(bytes(buffer)));
   }
