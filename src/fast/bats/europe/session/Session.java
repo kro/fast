@@ -25,11 +25,12 @@ import fast.soup.templates.LoginRequest;
 import fast.templates.MessageTemplate;
 
 public class Session {
-  private static final String SESSION = "6";
-  private static final String SEQUENCE_NUMBER = "0";
+  private static final String SESSION = "0006";
+  private static final String SEQUENCE_NUMBER = "";
+
   private final Encoder encoder;
-  
-  public Session(Encoder encoder){
+
+  public Session(Encoder encoder) {
     this.encoder = encoder;
   }
 
