@@ -21,7 +21,7 @@ import java.util.Arrays;
 import fast.operators.FieldOperator;
 import fast.types.Type;
 
-abstract public class Field<T> extends AbstractElem<T> {
+abstract public class Field<T> extends AbstractElem<T> implements Comparable<Field<?>> {
   private final String name;
   private final Type<T> type;
   private int maxLength = Integer.MAX_VALUE;
@@ -41,13 +41,19 @@ abstract public class Field<T> extends AbstractElem<T> {
     return name;
   }
 
+  @Override
+  public int compareTo(Field<?> field) {
+    return getName().compareTo(field.getName());
+  }
+
   /**
    * @return value as bytes padded to right if maxLenght is less than
    *         Integer.MAX_VALUE
    */
   public byte[] getBytes(T value) {
     byte[] valueAsBytes = type.getBytes(value);
-    if(maxLength == Integer.MAX_VALUE) return valueAsBytes;
+    if (maxLength == Integer.MAX_VALUE)
+      return valueAsBytes;
     return padded(valueAsBytes);
   }
 
