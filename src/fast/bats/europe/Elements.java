@@ -24,10 +24,9 @@ import fast.types.UnsignedInt32;
 
 public class Elements {
   public static final Elem<String> TEMPLATE_IDENTIFIER = PacketType.ELEM;
-  
   public static final Field<Long> TIME_SECONDS = new LongField("TimeSeconds");
   public static final Field<Long> TIME_MILLISECONDS = new LongField("TimeMilliseconds");
-  public static final Field<String> MESSAGE_TYPE = new StringField("MessageType");
+  public static final Field<String> MESSAGE_TYPE = new CharField("MessageType");
   public static final Field<String> SYMBOL_1 = new StringField("Symbol.1");
   public static final Field<String> SYMBOL_2 = new StringField("Symbol.2");
   public static final Field<String> ORDER_ID_1 = new StringField("OrderId.1");
@@ -58,6 +57,12 @@ public class Elements {
   private static class StringField extends Field<String> {
     protected StringField(String name) {
       super(name, AsciiString.TYPE, new CopyOp<String>());
+    }
+  }
+
+  private static class CharField extends Field<String> {
+    protected CharField(String name) {
+      super(name, AsciiString.TYPE, new CopyOp<String>(), 1);
     }
   }
 }
