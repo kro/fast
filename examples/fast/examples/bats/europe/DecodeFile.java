@@ -15,7 +15,6 @@
  */
 package fast.examples.bats.europe;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -36,12 +35,7 @@ public class DecodeFile {
     FileInputStream in = new FileInputStream(args[0]);
     FileChannel fc = in.getChannel();
     while (fc.isOpen()) {
-      int len;
-      try {
-        len = fc.read(buffer);
-      } catch (IOException e) {
-        len = -1;
-      }
+      int len = readChannel(fc);
       if (len > 0) {
         parse();
       } else if (len < 0) {
@@ -49,6 +43,14 @@ public class DecodeFile {
       }
     }
     System.out.println("OK");
+  }
+
+  private static int readChannel(FileChannel fc) {
+    try {
+      return fc.read(buffer);
+    } catch (IOException e) {
+      return -1;
+    }
   }
 
   private static void parse() {
