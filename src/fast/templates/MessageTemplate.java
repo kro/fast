@@ -15,11 +15,15 @@
  */
 package fast.templates;
 
+import java.nio.ByteBuffer;
+
+import fast.Encoder;
+import fast.FieldContainer;
 import fast.Message;
 
 public class MessageTemplate extends Template<Message> {
   private final String packetType;
-  
+
   public MessageTemplate(String packetType) {
     this.packetType = packetType;
   }
@@ -27,10 +31,15 @@ public class MessageTemplate extends Template<Message> {
   public final String getPacketType() {
     return packetType;
   }
-  
+
+  @Override
+  public void encode(ByteBuffer buffer, FieldContainer container, Encoder encoder) {
+    buffer.put(packetType.getBytes()[0]);
+    super.encode(buffer, container, encoder);
+  }
+
   @Override
   protected Message newFieldContainer() {
     return new Message();
   }
-
 }
