@@ -19,17 +19,18 @@ import fast.Message;
 
 public class FastPitchMessage extends silvertip.Message {
   private Message message;
-  
-  public FastPitchMessage(byte[] payload) {
-    super(payload);
-  }
-
-  public FastPitchMessage() {
-    super(null);
-  }
 
   public FastPitchMessage(Message message) {
-    this();
+    super(null);
     this.message = message;
+  }
+
+  public Message getMessage() {
+    return message;
+  }
+
+  @Override
+  public String toString() {
+    return "FastPitchMessage(" + message + ")";
   }
 }
