@@ -28,26 +28,26 @@ public class Elements {
   public static final Field<Long> TIME_SECONDS = new LongField("TimeSeconds");
   public static final Field<Long> TIME_MILLISECONDS = new LongField("TimeMilliseconds");
   public static final Field<String> MESSAGE_TYPE = new StringField("MessageType");
-  public static final Field<Long> ORDER_ID_4 = new LongField("OrderId4");
-  public static final Field<Long> PRICE_1 = new LongField("Price1");
-  public static final Field<String> ORDER_ID_1 = new StringField("OrderId1");
-  public static final Field<String> SYMBOL_1 = new StringField("Symbol1");
-  public static final Field<String> ORDER_ID_3 = new StringField("OrderId3");
+  public static final Field<String> SYMBOL_1 = new StringField("Symbol.1");
+  public static final Field<String> SYMBOL_2 = new StringField("Symbol.2");
+  public static final Field<String> ORDER_ID_1 = new StringField("OrderId.1");
+  public static final Field<String> ORDER_ID_2 = new StringField("OrderId.2");
+  public static final Field<String> ORDER_ID_3 = new StringField("OrderId.3");
+  public static final Field<Long> ORDER_ID_4 = new LongField("OrderId.4");
+  public static final Field<Long> PRICE_1 = new LongField("Price.1");
+  public static final Field<String> PRICE_2 = new StringField("Price.2");
   public static final Field<Long> SHARES = new LongField("Shares");
   public static final Field<String> SIDE = new StringField("Side");
-  public static final Field<Long> EXECUTION_ID_4 = new LongField("ExecutionId4");
-  public static final Field<String> EXECUTION_ID_2 = new StringField("ExecutionId2");
-  public static final Field<String> SYMBOL_2 = new StringField("Symbol2");
-  public static final Field<String> EXECUTION_ID_1 = new StringField("ExecutionId1");
-  public static final Field<String> EXECUTION_ID_3 = new StringField("ExecutionId3");
-  public static final Field<String> PRICE_2 = new StringField("Price2");
-  public static final Field<String> ORDER_ID_2 = new StringField("OrderId2");
+  public static final Field<String> EXECUTION_ID_1 = new StringField("ExecutionId.1");
+  public static final Field<String> EXECUTION_ID_2 = new StringField("ExecutionId.2");
+  public static final Field<String> EXECUTION_ID_3 = new StringField("ExecutionId.3");
+  public static final Field<Long> EXECUTION_ID_4 = new LongField("ExecutionId.4");
   public static final Field<String> DISPLAY = new StringField("Display");
   public static final Field<Long> LONG_SHARES = new LongField("LongShares");
-  public static final Field<String> LONG_PRICE_1 = new StringField("LongPrice1");
-  public static final Field<Long> LONG_PRICE_2 = new LongField("LongPrice2");
-  public static final Field<Long> LONG_PRICE_3 = new LongField("LongPrice3");
-  public static final Field<String> LONG_PRICE_4 = new StringField("LongPrice4");
+  public static final Field<String> LONG_PRICE_1 = new StringField("LongPrice.1");
+  public static final Field<Long> LONG_PRICE_2 = new LongField("LongPrice.2");
+  public static final Field<Long> LONG_PRICE_3 = new LongField("LongPrice.3");
+  public static final Field<String> LONG_PRICE_4 = new StringField("LongPrice.4");
 
   private static class LongField extends Field<Long> {
     protected LongField(String name) {
