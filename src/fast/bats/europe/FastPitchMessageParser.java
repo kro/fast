@@ -37,7 +37,7 @@ import fast.templates.MessageTemplate;
 
 import fast.bats.europe.templates.SequenceData;
 
-public class FastPitchMessageParser implements MessageParser<FastPitchMessage> {
+public class FastPitchMessageParser implements MessageParser<Message> {
   private final Dictionary dictionary = new Dictionary();
 
   private Map<String, MessageTemplate> decoders = new HashMap<String, MessageTemplate>() {
@@ -53,8 +53,8 @@ public class FastPitchMessageParser implements MessageParser<FastPitchMessage> {
   };
 
   @Override
-  public FastPitchMessage parse(ByteBuffer buffer) throws PartialMessageException {
-    return new FastPitchMessage(decode(buffer));
+  public Message parse(ByteBuffer buffer) throws PartialMessageException {
+    return decode(buffer);
   }
 
   private Message decode(ByteBuffer buffer) {

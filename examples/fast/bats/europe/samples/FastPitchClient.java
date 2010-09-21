@@ -24,8 +24,7 @@ import java.util.Properties;
 import silvertip.CommandLine;
 import silvertip.Connection;
 import silvertip.Events;
-import silvertip.Message;
-import fast.bats.europe.FastPitchMessage;
+import fast.Message;
 import fast.bats.europe.FastPitchMessageParser;
 import fast.bats.europe.session.Session;
 import fast.soup.SoupTCP2Encoder;
@@ -40,7 +39,7 @@ public class FastPitchClient {
     String password = props.getProperty("password");
     Session session = new Session(new SoupTCP2Encoder());
     Events events = Events.open(30 * 1000);
-    Connection<FastPitchMessage> connection = connection(hostname, port);
+    Connection<Message> connection = connection(hostname, port);
     CommandLine commandLine = commandLine(username, password, session, connection);
     events.register(connection);
     events.register(commandLine);
@@ -48,7 +47,7 @@ public class FastPitchClient {
   }
 
   private static CommandLine commandLine(final String username, final String password, final Session session,
-      final Connection<FastPitchMessage> connection) throws IOException {
+      final Connection<Message> connection) throws IOException {
     final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
       @Override
       public void commandLine(String commandLine) {
@@ -56,7 +55,7 @@ public class FastPitchClient {
         if (commandLine.startsWith("login")) {
           session.login(connection, username, password);
         } else
-          connection.send(new Message(getMessageBytes(commandLine)));
+          connection.send(getMessageBytes(commandLine));
       }
 
       private byte[] getMessageBytes(String commandLine) {
@@ -79,22 +78,22 @@ public class FastPitchClient {
     return commandLine;
   }
 
-  private static Connection<FastPitchMessage> connection(String hostname, int port) throws IOException {
+  private static Connection<Message> connection(String hostname, int port) throws IOException {
     return Connection.connect(new InetSocketAddress(hostname, port), new FastPitchMessageParser(),
-        new Connection.Callback<FastPitchMessage>() {
-          public void messages(Connection<FastPitchMessage> connection, Iterator<FastPitchMessage> messages) {
+        new Connection.Callback<Message>() {
+          public void messages(Connection<Message> connection, Iterator<Message> messages) {
             while (messages.hasNext()) {
               Message m = messages.next();
               print("Message from server : " + m);
             }
           }
 
-          public void idle(Connection<FastPitchMessage> connection) {
+          public void idle(Connection<Message> connection) {
             print("Idle detected.");
           }
 
           @Override
-          public void closed(Connection<FastPitchMessage> connection) {
+          public void closed(Connection<Message> connection) {
           }
         });
   }
