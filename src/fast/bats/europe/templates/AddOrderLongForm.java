@@ -24,7 +24,7 @@ public class AddOrderLongForm extends SequenceTemplate {
   private AddOrderLongForm() {
     add(OrderId.TEMPLATE);
     add(Elements.SIDE);
-    add(Elements.SHARES);
+    add(Elements.LONG_SHARES);
     add(Symbol.TEMPLATE);
     add(LongPrice.TEMPLATE);
     add(Elements.DISPLAY);
