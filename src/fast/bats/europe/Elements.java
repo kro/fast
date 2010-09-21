@@ -29,17 +29,17 @@ public class Elements {
   public static final Field<String> MESSAGE_TYPE = new CharField("MessageType");
   public static final Field<String> SYMBOL_1 = new StringField("Symbol.1");
   public static final Field<String> SYMBOL_2 = new StringField("Symbol.2");
-  public static final Field<String> ORDER_ID_1 = new StringField("OrderId.1");
-  public static final Field<String> ORDER_ID_2 = new StringField("OrderId.2");
-  public static final Field<String> ORDER_ID_3 = new StringField("OrderId.3");
+  public static final Field<String> ORDER_ID_1 = new CharField("OrderId.1");
+  public static final Field<String> ORDER_ID_2 = new CharField("OrderId.2");
+  public static final Field<String> ORDER_ID_3 = new StringField("OrderId.3", 4);
   public static final Field<Long> ORDER_ID_4 = new LongField("OrderId.4");
   public static final Field<Long> PRICE_1 = new LongField("Price.1");
-  public static final Field<String> PRICE_2 = new StringField("Price.2");
+  public static final Field<String> PRICE_2 = new StringField("Price.2", 2);
   public static final Field<Long> SHARES = new LongField("Shares");
   public static final Field<String> SIDE = new CharField("Side");
-  public static final Field<String> EXECUTION_ID_1 = new StringField("ExecutionId.1");
-  public static final Field<String> EXECUTION_ID_2 = new StringField("ExecutionId.2");
-  public static final Field<String> EXECUTION_ID_3 = new StringField("ExecutionId.3");
+  public static final Field<String> EXECUTION_ID_1 = new CharField("ExecutionId.1");
+  public static final Field<String> EXECUTION_ID_2 = new CharField("ExecutionId.2");
+  public static final Field<String> EXECUTION_ID_3 = new StringField("ExecutionId.3", 2);
   public static final Field<Long> EXECUTION_ID_4 = new LongField("ExecutionId.4");
   public static final Field<String> DISPLAY = new CharField("Display");
   public static final Field<Long> LONG_SHARES = new LongField("LongShares");
@@ -57,6 +57,10 @@ public class Elements {
   private static class StringField extends Field<String> {
     protected StringField(String name) {
       super(name, AsciiString.TYPE, new CopyOp<String>());
+    }
+
+    protected StringField(String name, int size) {
+      super(name, AsciiString.TYPE, new CopyOp<String>(), size);
     }
   }
 
