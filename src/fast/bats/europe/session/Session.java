@@ -22,7 +22,6 @@ import fast.Encoder;
 import fast.Message;
 import fast.soup.Elements;
 import fast.soup.templates.LoginRequest;
-import fast.templates.MessageTemplate;
 
 public class Session {
   private static final String SESSION = "0006";
@@ -40,11 +39,11 @@ public class Session {
     message.set(Elements.PASSWORD, password);
     message.set(Elements.SESSION, SESSION);
     message.set(Elements.SEQUENCE_NUMBER, SEQUENCE_NUMBER);
-    send(connection, LoginRequest.TEMPLATE, message);
+    send(connection, message);
   }
 
-  private void send(Connection<?> connection, MessageTemplate template, Message message) {
-    ByteBuffer buffer = encoder.encode(message, template);
+  private void send(Connection<?> connection, Message message) {
+    ByteBuffer buffer = encoder.encode(message);
     connection.send(new silvertip.Message(bytes(buffer)));
   }
 

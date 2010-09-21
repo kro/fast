@@ -21,13 +21,12 @@ import fast.Encoder;
 import fast.FieldContainer;
 import fast.Message;
 import fast.elements.Field;
-import fast.templates.MessageTemplate;
 
 public class SoupTCP2Encoder implements Encoder {
   @Override
-  public ByteBuffer encode(Message message, MessageTemplate template) {
+  public ByteBuffer encode(Message message) {
     ByteBuffer buffer = ByteBuffer.allocate(1024);
-    template.encode(buffer, message, this);
+    message.encode(buffer, this);
     buffer.put((byte) '\n');
     return buffer;
   }

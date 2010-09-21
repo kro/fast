@@ -37,4 +37,8 @@ public class Message extends FieldContainer {
   public String toString() {
     return template.getPacketType() + "(" + super.toString() + ")";
   }
+
+  public void encode(ByteBuffer buffer, Encoder encoder) {
+    template.encode(buffer, this, encoder);
+  }
 }
