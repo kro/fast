@@ -36,14 +36,19 @@ public class FastPitchClient {
     props.load(new FileInputStream("data/FastPitchClient.properties"));
     String hostname = props.getProperty("hostname");
     int port = Integer.parseInt(props.getProperty("port"));
-    final String username = props.getProperty("username");
-    final String password = props.getProperty("password");
-    final Session session = new Session(new SoupTCP2Encoder());
+    String username = props.getProperty("username");
+    String password = props.getProperty("password");
+    Session session = new Session(new SoupTCP2Encoder());
+    Events events = Events.open(30 * 1000);
+    Connection<FastPitchMessage> connection = connection(hostname, port);
+    CommandLine commandLine = commandLine(username, password, session, connection);
+    events.register(connection);
+    events.register(commandLine);
+    events.dispatch();
+  }
 
-    final Events events = Events.open(30 * 1000);
-
-    final Connection<FastPitchMessage> connection = createConnection(hostname, port);
-
+  private static CommandLine commandLine(final String username, final String password, final Session session,
+      final Connection<FastPitchMessage> connection) throws IOException {
     final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
       @Override
       public void commandLine(String commandLine) {
@@ -71,13 +76,10 @@ public class FastPitchClient {
         return "O\n".getBytes();
       }
     });
-
-    events.register(commandLine);
-    events.register(connection);
-    events.dispatch();
+    return commandLine;
   }
 
-  private static Connection<FastPitchMessage> createConnection(String hostname, int port) throws IOException {
+  private static Connection<FastPitchMessage> connection(String hostname, int port) throws IOException {
     return Connection.connect(new InetSocketAddress(hostname, port), new FastPitchMessageParser(),
         new Connection.Callback<FastPitchMessage>() {
           public void messages(Connection<FastPitchMessage> connection, Iterator<FastPitchMessage> messages) {
