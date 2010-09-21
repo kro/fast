@@ -32,4 +32,9 @@ public class Message extends FieldContainer {
       values.put(field, seq.get(field));
     }
   }
+
+  @Override
+  public String toString() {
+    return template.getPacketType() + "(" + super.toString() + ")";
+  }
 }
