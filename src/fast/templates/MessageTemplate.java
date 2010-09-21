@@ -40,6 +40,6 @@ public class MessageTemplate extends Template<Message> {
 
   @Override
   protected Message newFieldContainer() {
-    return new Message();
+    return new Message(this);
   }
 }

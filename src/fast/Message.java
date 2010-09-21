@@ -15,9 +15,18 @@
  */
 package fast;
 
+import java.nio.ByteBuffer;
+
 import fast.elements.Field;
+import fast.templates.MessageTemplate;
 
 public class Message extends FieldContainer {
+  private final MessageTemplate template;
+
+  public Message(MessageTemplate template) {
+    this.template = template;
+  }
+
   public void addSequence(Sequence seq) {
     for (Field<?> field : seq.getFields()) {
       values.put(field, seq.get(field));

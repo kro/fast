@@ -35,7 +35,7 @@ public class Session {
   }
 
   public void login(Connection<?> connection, String username, String password) {
-    Message message = new Message();
+    Message message = new Message(LoginRequest.TEMPLATE);
     message.set(Elements.USERNAME, username);
     message.set(Elements.PASSWORD, password);
     message.set(Elements.SESSION, SESSION);
