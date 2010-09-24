@@ -117,8 +117,4 @@ public class FastPitchClient {
           }
         });
   }
-
-  private static void print(String str) {
-    System.out.println(str);
-  }
 }
