@@ -55,7 +55,7 @@ public class FastPitchClient {
     Session session = new Session(new SoupTCP2Encoder());
     Events events = Events.open(TIMEOUT_INTERVAL_MSEC);
     Connection<Message> connection = connection(cmdLineArgs.hostname, cmdLineArgs.port, session);
-    CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection);
+    CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection, events);
     events.register(connection);
     events.register(commandLine);
     events.dispatch();
@@ -83,7 +83,7 @@ public class FastPitchClient {
   }
 
   private static CommandLine commandLine(final String username, final String password, final Session session,
-      final Connection<Message> connection) throws IOException {
+      final Connection<Message> connection, final Events events) throws IOException {
     final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
       @Override
       public void commandLine(String commandLine) {
@@ -91,6 +91,8 @@ public class FastPitchClient {
           session.login(connection, username, password);
         } else if (commandLine.startsWith("logout")) {
           session.logout(connection);
+        } else if (commandLine.startsWith("quit")) {
+          events.stop();
         }
       }
     });
