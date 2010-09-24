@@ -87,7 +87,6 @@ public class FastPitchClient {
     final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
       @Override
       public void commandLine(String commandLine) {
-        print("executing ( " + commandLine + " )");
         if (commandLine.startsWith("login")) {
           session.login(connection, username, password);
         } else if (commandLine.startsWith("logout")) {
