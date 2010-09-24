@@ -77,6 +77,8 @@ public class FastPitchClient {
         print("executing ( " + commandLine + " )");
         if (commandLine.startsWith("login")) {
           session.login(connection, username, password);
+        } else if (commandLine.startsWith("logout")) {
+          session.logout(connection);
         } else
           connection.send(getMessageBytes(commandLine));
       }
