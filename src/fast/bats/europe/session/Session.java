@@ -22,6 +22,7 @@ import fast.Encoder;
 import fast.Message;
 import fast.soup.Elements;
 import fast.soup.templates.LoginRequest;
+import fast.soup.templates.ServerHeartbeat;
 
 public class Session {
   private static final String SESSION = "0006";
@@ -40,6 +41,10 @@ public class Session {
     message.set(Elements.SESSION, SESSION);
     message.set(Elements.SEQUENCE_NUMBER, SEQUENCE_NUMBER);
     send(connection, message);
+  }
+
+  public void heartbeat(Connection<?> connection) {
+    send(connection, new Message(ServerHeartbeat.TEMPLATE));
   }
 
   private void send(Connection<?> connection, Message message) {
