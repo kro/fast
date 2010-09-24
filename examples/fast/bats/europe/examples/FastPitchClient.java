@@ -51,6 +51,10 @@ public class FastPitchClient {
   }
 
   public static void main(String[] args) throws IOException {
+    new FastPitchClient().run(args);
+  }
+
+  private void run(String[] args) throws IOException {
     CommandLineArgs cmdLineArgs = parseCommandLineArgs(args);
     Session session = new Session(new SoupTCP2Encoder());
     Events events = Events.open(TIMEOUT_INTERVAL_MSEC);
@@ -61,7 +65,7 @@ public class FastPitchClient {
     events.dispatch();
   }
 
-  private static CommandLineArgs parseCommandLineArgs(String[] args) {
+  private CommandLineArgs parseCommandLineArgs(String[] args) {
     if (args.length < 4) {
       exit("Usage: FastPitchClient HOSTNAME PORT USERNAME PASSWORD");
     }
@@ -77,12 +81,12 @@ public class FastPitchClient {
     return cmdLineArgs;
   }
 
-  private static void exit(String reason) {
+  private void exit(String reason) {
       System.err.println(reason);
       System.exit(1);
   }
 
-  private static CommandLine commandLine(final String username, final String password, final Session session,
+  private CommandLine commandLine(final String username, final String password, final Session session,
       final Connection<Message> connection, final Events events) throws IOException {
     final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
       @Override
@@ -99,7 +103,7 @@ public class FastPitchClient {
     return commandLine;
   }
 
-  private static Connection<Message> connection(String hostname, int port, final Session session) throws IOException {
+  private Connection<Message> connection(String hostname, int port, final Session session) throws IOException {
     return Connection.connect(new InetSocketAddress(hostname, port), new FastPitchMessageParser(),
         new Connection.Callback<Message>() {
           public void messages(Connection<Message> connection, Iterator<Message> messages) {
