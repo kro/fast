@@ -23,6 +23,8 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
+import silvertip.PartialMessageException;
+
 @RunWith(JDaveRunner.class)
 public class TypeDecodingSpec extends Specification<Type<String>> {
   public class Initialized extends Type<String> {
@@ -36,7 +38,7 @@ public class TypeDecodingSpec extends Specification<Type<String>> {
       return this;
     }
 
-    public void decodeWithMaxLimit() {
+    public void decodeWithMaxLimit() throws Exception {
       final int limit = dataString.length() - 5;
       String result = decode(data, limit);
       specify(result.length(), must.equal(limit));
@@ -49,10 +51,10 @@ public class TypeDecodingSpec extends Specification<Type<String>> {
         public void run() throws Throwable {
           decode(data);
         }
-      }, must.raise(RuntimeException.class));
+      }, must.raise(PartialMessageException.class));
     }
 
-    public void decodeWithStopBit() {
+    public void decodeWithStopBit() throws Exception {
       final byte[] dataArray = data.array();
       final int stopBitIndex = dataString.length() - 3;
       dataArray[stopBitIndex] = addStopBit(dataArray[stopBitIndex]);

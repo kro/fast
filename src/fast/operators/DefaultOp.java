@@ -15,6 +15,8 @@
  */
 package fast.operators;
 
+import silvertip.PartialMessageException;
+
 /** A default field operator as specified in FAST Specification version 1.1,
  * section 6.3.4. */
 public class DefaultOp<T> implements FieldOperator<T>{
@@ -25,7 +27,7 @@ public class DefaultOp<T> implements FieldOperator<T>{
   }
 
   @Override
-  public T apply(Visitor<T> visitor) {
+  public T apply(Visitor<T> visitor) throws PartialMessageException {
     return visitor.isPresent() ? visitor.decode() : value;
   }
 }

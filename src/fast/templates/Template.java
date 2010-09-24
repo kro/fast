@@ -19,6 +19,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import silvertip.PartialMessageException;
 import fast.Dictionary;
 import fast.Encoder;
 import fast.FieldContainer;
@@ -37,7 +38,7 @@ public abstract class Template<T extends FieldContainer> {
       add(field);
   }
 
-  public T decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) {
+  public T decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
     T result = newFieldContainer();
     for (Field<?> field : fields)
       result.set(field, field.decode(buffer, pmap, dictionary));

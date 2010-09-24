@@ -57,7 +57,7 @@ public class FastPitchMessageParser implements MessageParser<Message> {
     return decode(buffer);
   }
 
-  private Message decode(ByteBuffer buffer) {
+  private Message decode(ByteBuffer buffer) throws PartialMessageException {
     PresenceMap pmap = PresenceMapFactory.create(buffer);
     String identifier = PacketType.ELEM.decode(buffer, pmap, dictionary);
     MessageTemplate template = decoders.get(identifier);

@@ -15,11 +15,13 @@
  */
 package fast.operators;
 
+import silvertip.PartialMessageException;
+
 /** A copy field operator as specified in FAST Specification version 1.1,
  * section 6.3.5. */
 public class CopyOp<T> implements FieldOperator<T> {
   @Override
-  public T apply(Visitor<T> visitor) {
+  public T apply(Visitor<T> visitor) throws PartialMessageException {
     T result = null;
     if (visitor.isPresent()) {
       result = visitor.decode();

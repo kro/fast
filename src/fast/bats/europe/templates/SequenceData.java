@@ -19,16 +19,15 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
-import fast.soup.PacketType;
-import fast.templates.MessageTemplate;
-import fast.templates.SequenceTemplate;
-
-import fast.bats.europe.Elements;
-import fast.elements.PresenceMap;
-
+import silvertip.PartialMessageException;
 import fast.Dictionary;
 import fast.Message;
 import fast.Sequence;
+import fast.bats.europe.Elements;
+import fast.elements.PresenceMap;
+import fast.soup.PacketType;
+import fast.templates.MessageTemplate;
+import fast.templates.SequenceTemplate;
 
 public class SequenceData extends MessageTemplate {
   public static final MessageTemplate TEMPLATE = new SequenceData();
@@ -58,13 +57,14 @@ public class SequenceData extends MessageTemplate {
   }
   
   @Override
-  public Message decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) {
+  public Message decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
     Message message = super.decode(buffer, pmap, dictionary);
     message.addSequence(marketDataSequence(buffer, pmap, message, dictionary));
     return message;
   }
 
-  private Sequence marketDataSequence(ByteBuffer buffer, PresenceMap pmap, Message message, Dictionary dictionary) {
+  private Sequence marketDataSequence(ByteBuffer buffer, PresenceMap pmap, Message message, Dictionary dictionary)
+      throws PartialMessageException {
     SequenceTemplate template = sequenceDataTemplates.get(messageType(message));
     if (template == null)
       throw new RuntimeException("unknown message type: \"" + messageType(message) + "\"");

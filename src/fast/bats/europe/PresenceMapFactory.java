@@ -17,11 +17,13 @@ package fast.bats.europe;
 
 import java.nio.ByteBuffer;
 
+import silvertip.PartialMessageException;
+
 import fast.elements.PresenceMap;
 import fast.types.PresenceMapType;
 
 public class PresenceMapFactory {
-  public static PresenceMap create(ByteBuffer buffer) {
+  public static PresenceMap create(ByteBuffer buffer) throws PartialMessageException {
     PresenceMap pmap = PresenceMapType.TYPE.decode(buffer);
     pmap.bind(Elements.MESSAGE_TYPE, 0);
     pmap.bind(Elements.ORDER_ID_4, 1);

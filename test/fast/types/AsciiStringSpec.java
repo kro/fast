@@ -20,12 +20,13 @@ import java.nio.ByteBuffer;
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+
 import org.junit.runner.RunWith;
 
 @RunWith(JDaveRunner.class)
 public class AsciiStringSpec extends Specification<AsciiString> {
   public class Initialized {
-    public void validWithStopBit() {
+    public void validWithStopBit() throws Exception {
       ByteBuffer buffer = AsciiString.TYPE.encode("Hello");
       specify(AsciiString.TYPE.decode(buffer), must.equal("Hello"));
     }

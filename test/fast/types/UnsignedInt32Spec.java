@@ -22,12 +22,11 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fast.AbstractFastSpec;
-import fast.types.UnsignedInt32;
 
 @RunWith(JDaveRunner.class)
 public class UnsignedInt32Spec extends AbstractFastSpec<UnsignedInt32> {
   public class Initialized {
-    public void validDecode() {
+    public void validDecode() throws Exception {
       byte[] bytes = toByteArray(0x2, 0x61, 0x15, 0xee);
       ByteBuffer buffer = ByteBuffer.wrap(bytes);
       specify(UnsignedInt32.TYPE.decode(buffer), must.equal(5786350));
@@ -39,10 +38,9 @@ public class UnsignedInt32Spec extends AbstractFastSpec<UnsignedInt32> {
       specify(UnsignedInt32.TYPE.encode(22714l), must.equal(expected));
     }
 
-    public void validEncodeDecode() {
+    public void validEncodeDecode() throws Exception {
       long value = 231343l;
-      specify(UnsignedInt32.TYPE.decode(UnsignedInt32.TYPE.encode(value)),
-          must.equal(value));
+      specify(UnsignedInt32.TYPE.decode(UnsignedInt32.TYPE.encode(value)), must.equal(value));
     }
   }
 }

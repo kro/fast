@@ -17,6 +17,8 @@ package fast.elements;
 
 import java.nio.ByteBuffer;
 
+import silvertip.PartialMessageException;
+
 import fast.Dictionary;
 import fast.operators.FieldOperator;
 import fast.types.Type;
@@ -40,7 +42,8 @@ public abstract class AbstractElem<T> implements Elem<T> {
     this(type, operator, Integer.MAX_VALUE);
   }
 
-  public T decode(final ByteBuffer buffer, final PresenceMap pmap, final Dictionary dictionary) {
+  public T decode(final ByteBuffer buffer, final PresenceMap pmap, final Dictionary dictionary)
+      throws PartialMessageException {
     return operator.apply(new FieldOperator.Visitor<T>() {
       @Override
       public boolean isPresent() {
@@ -48,7 +51,7 @@ public abstract class AbstractElem<T> implements Elem<T> {
       }
 
       @Override
-      public T decode() {
+      public T decode() throws PartialMessageException {
         return type.decode(buffer, maxLength);
       }
 

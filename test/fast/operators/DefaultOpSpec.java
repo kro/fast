@@ -26,7 +26,7 @@ public class DefaultOpSpec extends AbstractFieldOperatorSpec<DefaultOp<Object>> 
   private Object defaultValue = new Object();
   
   @Override
-  protected void fieldIsNotPresent(Visitor<Object> visitor) {
+  protected void fieldIsNotPresent(Visitor<Object> visitor) throws Exception {
     Object result = getOperator().apply(visitor);
     specify(result, must.equal(defaultValue));
   }

@@ -25,7 +25,7 @@ import fast.operators.FieldOperator.Visitor;
 @RunWith(JDaveRunner.class)
 public abstract class AbstractFieldOperatorSpec<T extends FieldOperator<Object>> extends Specification<T> {
   public class Initialized {
-    public void fieldIsPresent() {
+    public void fieldIsPresent() throws Exception {
       final Object expected = new Object();
       Object result = getOperator().apply(new Visitor<Object>() {
         private Object previousValue = null;
@@ -53,7 +53,7 @@ public abstract class AbstractFieldOperatorSpec<T extends FieldOperator<Object>>
       specify(result, must.equal(expected));
     }
 
-    public void fieldIsNotPresent() {
+    public void fieldIsNotPresent() throws Exception {
       AbstractFieldOperatorSpec.this.fieldIsNotPresent(new Visitor<Object>() {
         private Object previousValue = null;
 
@@ -82,5 +82,5 @@ public abstract class AbstractFieldOperatorSpec<T extends FieldOperator<Object>>
 
   protected abstract T getOperator();
 
-  protected abstract void fieldIsNotPresent(Visitor<Object> visitor);
+  protected abstract void fieldIsNotPresent(Visitor<Object> visitor) throws Exception;
 }

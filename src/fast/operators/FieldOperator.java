@@ -15,12 +15,14 @@
  */
 package fast.operators;
 
+import silvertip.PartialMessageException;
+
 public interface FieldOperator<T> {
   interface Visitor<T> {
     boolean isPresent();
-    T decode();
+    T decode() throws PartialMessageException;
     T getPreviousValue();
     void setAsPreviousValue(T value);
   }
-  T apply(Visitor<T> visitor);
+  T apply(Visitor<T> visitor) throws PartialMessageException;
 }

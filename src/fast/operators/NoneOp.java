@@ -15,10 +15,12 @@
  */
 package fast.operators;
 
+import silvertip.PartialMessageException;
+
 public class NoneOp<T> implements FieldOperator<T> {
 
   @Override
-  public T apply(fast.operators.FieldOperator.Visitor<T> visitor) {
+  public T apply(fast.operators.FieldOperator.Visitor<T> visitor) throws PartialMessageException {
     if (visitor.isPresent())
       return visitor.decode();
     throw new RuntimeException("Field not present");

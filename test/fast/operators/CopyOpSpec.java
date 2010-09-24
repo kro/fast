@@ -24,7 +24,7 @@ import fast.operators.FieldOperator.Visitor;
 @RunWith(JDaveRunner.class)
 public class CopyOpSpec extends AbstractFieldOperatorSpec<CopyOp<Object>> {
   @Override
-  protected void fieldIsNotPresent(Visitor<Object> visitor) {
+  protected void fieldIsNotPresent(Visitor<Object> visitor) throws Exception {
     Object previous = new Object();
     visitor.setAsPreviousValue(previous);
 

@@ -17,6 +17,8 @@ package fast.types;
 
 import java.nio.ByteBuffer;
 
+import silvertip.PartialMessageException;
+
 public abstract class Type<T> {
   static final byte ALL_BUT_STOP_BIT_MASK = (byte) 0x7F;
   static final byte STOP_BIT_MASK = (byte) 0x80;
@@ -31,13 +33,13 @@ public abstract class Type<T> {
 
   public abstract ByteBuffer encode(T value);
 
-  public final T decode(ByteBuffer buffer) {
+  public final T decode(ByteBuffer buffer) throws PartialMessageException {
     return decode(buffer, Integer.MAX_VALUE);
   }
 
   public abstract byte[] getBytes(T value);
   
-  public final T decode(ByteBuffer buffer, int maxLength) {
+  public final T decode(ByteBuffer buffer, int maxLength) throws PartialMessageException {
     Decoder<T> decoder = createDecoder();
     int startPosition = buffer.position();
     while (buffer.hasRemaining()) {
@@ -46,7 +48,7 @@ public abstract class Type<T> {
       if (hasStopBit(b) || buffer.position() - startPosition == maxLength)
         return decoder.getResult();
     }
-    throw new RuntimeException("Stop bit not found");
+    throw new PartialMessageException();
   }
 
   protected final boolean containsStopBit(byte[] bytes) {
