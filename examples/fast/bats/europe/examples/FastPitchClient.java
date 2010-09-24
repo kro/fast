@@ -30,20 +30,41 @@ import fast.bats.europe.session.Session;
 import fast.soup.SoupTCP2Encoder;
 
 public class FastPitchClient {
+  private static class CommandLineArgs {
+    String hostname, username, password;
+    int port;
+  }
+
   public static void main(String[] args) throws IOException {
-    Properties props = new Properties();
-    props.load(new FileInputStream("data/FastPitchClient.properties"));
-    String hostname = props.getProperty("hostname");
-    int port = Integer.parseInt(props.getProperty("port"));
-    String username = props.getProperty("username");
-    String password = props.getProperty("password");
+    CommandLineArgs cmdLineArgs = parseCommandLineArgs(args);
     Session session = new Session(new SoupTCP2Encoder());
     Events events = Events.open(30 * 1000);
-    Connection<Message> connection = connection(hostname, port);
-    CommandLine commandLine = commandLine(username, password, session, connection);
+    Connection<Message> connection = connection(cmdLineArgs.hostname, cmdLineArgs.port);
+    CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection);
     events.register(connection);
     events.register(commandLine);
     events.dispatch();
+  }
+
+  private static CommandLineArgs parseCommandLineArgs(String[] args) {
+    if (args.length < 4) {
+      exit("Usage: FastPitchClient HOSTNAME PORT USERNAME PASSWORD");
+    }
+    CommandLineArgs cmdLineArgs = new CommandLineArgs();
+    cmdLineArgs.hostname = args[0];
+    try {
+        cmdLineArgs.port = Integer.parseInt(args[1]);
+    } catch (NumberFormatException e) {
+      exit("port must be an integer");
+    }
+    cmdLineArgs.username = args[2];
+    cmdLineArgs.password = args[3];
+    return cmdLineArgs;
+  }
+
+  private static void exit(String reason) {
+      System.err.println(reason);
+      System.exit(1);
   }
 
   private static CommandLine commandLine(final String username, final String password, final Session session,
