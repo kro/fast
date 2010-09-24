@@ -27,7 +27,9 @@ import fast.soup.templates.ServerHeartbeat;
 public class Session {
   private static final String SESSION = "0006";
   private static final String SEQUENCE_NUMBER = "";
+  private static final long HEARTBEAT_INTERVAL_MSEC = 1000L;
 
+  private long lastHeartbeatTimeMsec = 0;
   private final Encoder encoder;
 
   public Session(Encoder encoder) {
@@ -45,6 +47,14 @@ public class Session {
 
   public void heartbeat(Connection<?> connection) {
     send(connection, new Message(ServerHeartbeat.TEMPLATE));
+  }
+
+  public void receive(Connection<?> connection, Message message) {
+    long currentTimeMsec = System.currentTimeMillis();
+    if (currentTimeMsec - lastHeartbeatTimeMsec >= HEARTBEAT_INTERVAL_MSEC) {
+      heartbeat(connection);
+      lastHeartbeatTimeMsec = currentTimeMsec;
+    }
   }
 
   private void send(Connection<?> connection, Message message) {
