@@ -39,7 +39,7 @@ public class FastPitchClient {
     CommandLineArgs cmdLineArgs = parseCommandLineArgs(args);
     Session session = new Session(new SoupTCP2Encoder());
     Events events = Events.open(30 * 1000);
-    Connection<Message> connection = connection(cmdLineArgs.hostname, cmdLineArgs.port);
+    Connection<Message> connection = connection(cmdLineArgs.hostname, cmdLineArgs.port, session);
     CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection);
     events.register(connection);
     events.register(commandLine);
@@ -99,7 +99,7 @@ public class FastPitchClient {
     return commandLine;
   }
 
-  private static Connection<Message> connection(String hostname, int port) throws IOException {
+  private static Connection<Message> connection(String hostname, int port, final Session session) throws IOException {
     return Connection.connect(new InetSocketAddress(hostname, port), new FastPitchMessageParser(),
         new Connection.Callback<Message>() {
           public void messages(Connection<Message> connection, Iterator<Message> messages) {
@@ -111,7 +111,7 @@ public class FastPitchClient {
           }
 
           public void idle(Connection<Message> connection) {
-            print("Idle detected.");
+            session.heartbeat(connection);
           }
 
           @Override
