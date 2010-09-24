@@ -104,8 +104,9 @@ public class FastPitchClient {
         new Connection.Callback<Message>() {
           public void messages(Connection<Message> connection, Iterator<Message> messages) {
             while (messages.hasNext()) {
-              Message m = messages.next();
-              print("Message from server : " + m);
+              Message message = messages.next();
+              session.receive(connection, message);
+              print("Message from server : " + message);
             }
           }
 
