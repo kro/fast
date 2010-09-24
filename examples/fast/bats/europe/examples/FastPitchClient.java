@@ -29,8 +29,21 @@ import fast.bats.europe.FastPitchMessageParser;
 import fast.bats.europe.session.Session;
 import fast.soup.SoupTCP2Encoder;
 
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+
 public class FastPitchClient {
+  private static final Logger LOG = Logger.getLogger("FastPitchClient");
   private static final long TIMEOUT_INTERVAL_MSEC = 1000L;
+  
+  static {
+    LOG.setUseParentHandlers(false);
+    try {
+      LOG.addHandler(new FileHandler("messages.log"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   private static class CommandLineArgs {
     String hostname, username, password;
@@ -92,7 +105,7 @@ public class FastPitchClient {
             while (messages.hasNext()) {
               Message message = messages.next();
               session.receive(connection, message);
-              print("Message from server : " + message);
+              LOG.info(message.toString());
             }
           }
 
