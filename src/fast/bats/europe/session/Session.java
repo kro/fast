@@ -21,7 +21,9 @@ import silvertip.Connection;
 import fast.Encoder;
 import fast.Message;
 import fast.soup.Elements;
+
 import fast.soup.templates.LoginRequest;
+import fast.soup.templates.LogoutRequest;
 import fast.soup.templates.ServerHeartbeat;
 
 public class Session {
@@ -43,6 +45,10 @@ public class Session {
     message.set(Elements.SESSION, SESSION);
     message.set(Elements.SEQUENCE_NUMBER, SEQUENCE_NUMBER);
     send(connection, message);
+  }
+
+  public void logout(Connection<?> connection) {
+    send(connection, new Message(LogoutRequest.TEMPLATE));
   }
 
   public void heartbeat(Connection<?> connection) {
