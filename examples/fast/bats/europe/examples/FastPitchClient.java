@@ -79,25 +79,7 @@ public class FastPitchClient {
           session.login(connection, username, password);
         } else if (commandLine.startsWith("logout")) {
           session.logout(connection);
-        } else
-          connection.send(getMessageBytes(commandLine));
-      }
-
-      private byte[] getMessageBytes(String commandLine) {
-        if (commandLine.startsWith("logout")) {
-          print("Sending logout request");
-          return createLogoutRequest();
         }
-        print("Sending client heartbeat");
-        return createHeartbeat();
-      }
-
-      private byte[] createHeartbeat() {
-        return "R\n".getBytes();
-      }
-
-      private byte[] createLogoutRequest() {
-        return "O\n".getBytes();
       }
     });
     return commandLine;
