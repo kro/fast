@@ -35,6 +35,8 @@ import java.util.logging.Logger;
 public class FastPitchClient {
   private static final Logger LOG = Logger.getLogger("FastPitchClient");
   private static final long TIMEOUT_INTERVAL_MSEC = 1000L;
+
+  private Session session;
   
   static {
     LOG.setUseParentHandlers(false);
@@ -122,5 +124,13 @@ public class FastPitchClient {
           public void closed(Connection<Message> connection) {
           }
         });
+  }
+
+  public Session getSession() {
+    return session;
+  }
+
+  public void setSession(Session session) {
+    this.session = session;
   }
 }
