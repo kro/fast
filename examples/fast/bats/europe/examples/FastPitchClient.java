@@ -30,6 +30,8 @@ import fast.bats.europe.session.Session;
 import fast.soup.SoupTCP2Encoder;
 
 public class FastPitchClient {
+  private static final long TIMEOUT_INTERVAL_MSEC = 1000L;
+
   private static class CommandLineArgs {
     String hostname, username, password;
     int port;
@@ -38,7 +40,7 @@ public class FastPitchClient {
   public static void main(String[] args) throws IOException {
     CommandLineArgs cmdLineArgs = parseCommandLineArgs(args);
     Session session = new Session(new SoupTCP2Encoder());
-    Events events = Events.open(30 * 1000);
+    Events events = Events.open(TIMEOUT_INTERVAL_MSEC);
     Connection<Message> connection = connection(cmdLineArgs.hostname, cmdLineArgs.port, session);
     CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection);
     events.register(connection);
