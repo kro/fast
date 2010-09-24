@@ -27,6 +27,7 @@ public class PacketType extends fast.elements.TemplateIdentifier {
   public static final String LOGIN_REJECTED = "J";
   public static final String LOGIN_REQUEST = "L";
   public static final String END_OF_SESSION = "Z";
+  public static final String LOGOUT_REQUEST = "O";
 
   private PacketType() {
     super(new DefaultOp<String>(SEQUENCE_DATA));
