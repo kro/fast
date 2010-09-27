@@ -38,7 +38,8 @@ public class FastPitchClient {
 
   private Session session;
   private Connection<?> connection;
-  
+  private Events events;
+
   static {
     LOG.setUseParentHandlers(false);
     try {
@@ -60,7 +61,7 @@ public class FastPitchClient {
   private void run(String[] args) throws IOException {
     CommandLineArgs cmdLineArgs = parseCommandLineArgs(args);
     Session session = new Session(new SoupTCP2Encoder());
-    Events events = Events.open(TIMEOUT_INTERVAL_MSEC);
+    events = Events.open(TIMEOUT_INTERVAL_MSEC);
     Connection<Message> connection = connection(cmdLineArgs.hostname, cmdLineArgs.port, session);
     CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection, events);
     events.register(connection);
