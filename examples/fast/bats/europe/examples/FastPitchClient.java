@@ -55,11 +55,6 @@ public class FastPitchClient {
     }
   }
 
-  private static class CommandLineArgs {
-    String hostname, username, password;
-    int port;
-  }
-
   public static void main(String[] args) throws IOException {
     new FastPitchClient().run(args);
   }
@@ -69,29 +64,12 @@ public class FastPitchClient {
   }
 
   private void run(String[] args) throws IOException {
-    CommandLineArgs cmdLineArgs = parseCommandLineArgs(args);
     Session session = new Session(new SoupTCP2Encoder());
     events = Events.open(TIMEOUT_INTERVAL_MSEC);
     Connection<Message> connection = null; 
-    CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection, events);
+    CommandLine commandLine = commandLine(null, null, session, connection, events);
     events.register(commandLine);
     events.dispatch();
-  }
-
-  private CommandLineArgs parseCommandLineArgs(String[] args) {
-    if (args.length < 4) {
-      exit("Usage: FastPitchClient HOSTNAME PORT USERNAME PASSWORD");
-    }
-    CommandLineArgs cmdLineArgs = new CommandLineArgs();
-    cmdLineArgs.hostname = args[0];
-    try {
-        cmdLineArgs.port = Integer.parseInt(args[1]);
-    } catch (NumberFormatException e) {
-      exit("port must be an integer");
-    }
-    cmdLineArgs.username = args[2];
-    cmdLineArgs.password = args[3];
-    return cmdLineArgs;
   }
 
   private void exit(String reason) {
