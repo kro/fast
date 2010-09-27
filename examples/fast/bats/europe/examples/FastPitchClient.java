@@ -37,6 +37,7 @@ public class FastPitchClient {
   private static final long TIMEOUT_INTERVAL_MSEC = 1000L;
 
   private Session session;
+  private Connection<?> connection;
   
   static {
     LOG.setUseParentHandlers(false);
@@ -132,5 +133,14 @@ public class FastPitchClient {
 
   public void setSession(Session session) {
     this.session = session;
+  }
+
+  public Connection<?> getConnection() {
+    return connection;
+  }
+
+  public void setConnection(Connection<?> connection) throws IOException {
+    this.connection = connection;
+    events.register(connection);
   }
 }
