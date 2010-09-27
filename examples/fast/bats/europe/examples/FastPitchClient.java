@@ -49,11 +49,27 @@ public class FastPitchClient {
     events.dispatch();
   }
 
-  private void exit(String reason) {
-      System.err.println(reason);
-      System.exit(1);
+  public Session getSession() {
+    return session;
   }
 
+  public void setSession(Session session) {
+    this.session = session;
+  }
+
+  public Connection<?> getConnection() {
+    return connection;
+  }
+
+  public void setConnection(Connection<?> connection) throws IOException {
+    this.connection = connection;
+    events.register(connection);
+  }
+
+  public void quit() {
+    events.stop();
+  }
+  
   private CommandLine commandLine() throws IOException {
     return CommandLine.open(new CommandLine.Callback() {
       @Override
@@ -71,27 +87,6 @@ public class FastPitchClient {
         }
       }
     });
-  }
-
-  public void quit() {
-    events.stop();
-  }
-
-  public Session getSession() {
-    return session;
-  }
-
-  public void setSession(Session session) {
-    this.session = session;
-  }
-
-  public Connection<?> getConnection() {
-    return connection;
-  }
-
-  public void setConnection(Connection<?> connection) throws IOException {
-    this.connection = connection;
-    events.register(connection);
   }
 
   private void registerCommands() {
