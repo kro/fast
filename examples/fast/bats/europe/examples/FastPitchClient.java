@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import silvertip.CommandLine;
 import silvertip.Connection;
@@ -71,9 +72,8 @@ public class FastPitchClient {
     CommandLineArgs cmdLineArgs = parseCommandLineArgs(args);
     Session session = new Session(new SoupTCP2Encoder());
     events = Events.open(TIMEOUT_INTERVAL_MSEC);
-    Connection<Message> connection = connection(cmdLineArgs.hostname, cmdLineArgs.port, session);
+    Connection<Message> connection = null; 
     CommandLine commandLine = commandLine(cmdLineArgs.username, cmdLineArgs.password, session, connection, events);
-    events.register(connection);
     events.register(commandLine);
     events.dispatch();
   }
@@ -104,12 +104,16 @@ public class FastPitchClient {
     final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
       @Override
       public void commandLine(String commandLine) {
-        if (commandLine.startsWith("login")) {
-          session.login(connection, username, password);
-        } else if (commandLine.startsWith("logout")) {
-          session.logout(connection);
-        } else if (commandLine.startsWith("quit")) {
-          events.stop();
+        Scanner scanner = new Scanner(commandLine);
+        Command cmd = commands.get(scanner.next().toLowerCase());
+        if (cmd == null) {
+          System.out.println("unknown command");
+        } else {
+          try {
+            cmd.execute(FastPitchClient.this, scanner);
+          } catch (CommandArgException e) {
+            System.out.println(e.getMessage());
+          }
         }
       }
     });
