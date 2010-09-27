@@ -15,11 +15,7 @@
  */
 package fast.bats.europe.examples;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.Iterator;
-import java.util.Properties;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -27,33 +23,17 @@ import java.util.Scanner;
 import silvertip.CommandLine;
 import silvertip.Connection;
 import silvertip.Events;
-import fast.Message;
-import fast.bats.europe.FastPitchMessageParser;
-import fast.bats.europe.session.Session;
-import fast.soup.SoupTCP2Encoder;
-
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 import fast.bats.europe.examples.commands.*;
+import fast.bats.europe.session.Session;
 
 public class FastPitchClient {
-  private static final Logger LOG = Logger.getLogger("FastPitchClient");
   private static final long TIMEOUT_INTERVAL_MSEC = 1000L;
 
   private final Map<String, Command> commands = new HashMap<String, Command>();
   private Session session;
   private Connection<?> connection;
   private Events events;
-
-  static {
-    LOG.setUseParentHandlers(false);
-    try {
-      LOG.addHandler(new FileHandler("messages.log"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
 
   public static void main(String[] args) throws IOException {
     new FastPitchClient().run(args);
