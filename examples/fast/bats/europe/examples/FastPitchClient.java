@@ -64,10 +64,8 @@ public class FastPitchClient {
   }
 
   private void run(String[] args) throws IOException {
-    Session session = new Session(new SoupTCP2Encoder());
     events = Events.open(TIMEOUT_INTERVAL_MSEC);
-    Connection<Message> connection = null; 
-    CommandLine commandLine = commandLine(null, null, session, connection, events);
+    CommandLine commandLine = commandLine();
     events.register(commandLine);
     events.dispatch();
   }
@@ -77,9 +75,8 @@ public class FastPitchClient {
       System.exit(1);
   }
 
-  private CommandLine commandLine(final String username, final String password, final Session session,
-      final Connection<Message> connection, final Events events) throws IOException {
-    final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
+  private CommandLine commandLine() throws IOException {
+    return CommandLine.open(new CommandLine.Callback() {
       @Override
       public void commandLine(String commandLine) {
         Scanner scanner = new Scanner(commandLine);
@@ -95,7 +92,6 @@ public class FastPitchClient {
         }
       }
     });
-    return commandLine;
   }
 
   public void quit() {
