@@ -45,8 +45,7 @@ public class FastPitchClient {
 
   private void run(String[] args) throws IOException {
     events = Events.open(TIMEOUT_INTERVAL_MSEC);
-    CommandLine commandLine = commandLine();
-    events.register(commandLine);
+    events.register(commandLine());
     events.dispatch();
   }
 
