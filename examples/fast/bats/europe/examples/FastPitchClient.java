@@ -120,27 +120,6 @@ public class FastPitchClient {
     return commandLine;
   }
 
-  private Connection<Message> connection(String hostname, int port, final Session session) throws IOException {
-    return Connection.connect(new InetSocketAddress(hostname, port), new FastPitchMessageParser(),
-        new Connection.Callback<Message>() {
-          public void messages(Connection<Message> connection, Iterator<Message> messages) {
-            while (messages.hasNext()) {
-              Message message = messages.next();
-              session.receive(connection, message);
-              LOG.info(message.toString());
-            }
-          }
-
-          public void idle(Connection<Message> connection) {
-            session.heartbeat(connection);
-          }
-
-          @Override
-          public void closed(Connection<Message> connection) {
-          }
-        });
-  }
-
   public void quit() {
     events.stop();
   }
