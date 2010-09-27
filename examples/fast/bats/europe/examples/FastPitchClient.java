@@ -128,6 +128,10 @@ public class FastPitchClient {
         });
   }
 
+  public void quit() {
+    events.stop();
+  }
+
   public Session getSession() {
     return session;
   }
