@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.Map;
+import java.util.HashMap;
 
 import silvertip.CommandLine;
 import silvertip.Connection;
@@ -32,10 +34,13 @@ import fast.soup.SoupTCP2Encoder;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import fast.bats.europe.examples.commands.*;
+
 public class FastPitchClient {
   private static final Logger LOG = Logger.getLogger("FastPitchClient");
   private static final long TIMEOUT_INTERVAL_MSEC = 1000L;
 
+  private final Map<String, Command> commands = new HashMap<String, Command>();
   private Session session;
   private Connection<?> connection;
   private Events events;
@@ -56,6 +61,10 @@ public class FastPitchClient {
 
   public static void main(String[] args) throws IOException {
     new FastPitchClient().run(args);
+  }
+
+  public FastPitchClient() {
+    registerCommands();
   }
 
   private void run(String[] args) throws IOException {
@@ -147,5 +156,11 @@ public class FastPitchClient {
   public void setConnection(Connection<?> connection) throws IOException {
     this.connection = connection;
     events.register(connection);
+  }
+
+  private void registerCommands() {
+    commands.put("login", new Login());
+    commands.put("logout", new Logout());
+    commands.put("quit", new Quit());
   }
 }
