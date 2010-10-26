@@ -40,6 +40,15 @@ public class LoginRequestEncodingSpec extends Specification<LoginRequest> {
       specify(bufferToString(buffer), must.equal(expectedRequest()));
     }
 
+    private Message loginMessage() {
+      Message message = new Message(LoginRequest.TEMPLATE);
+      message.set(Elements.USERNAME, USERNAME);
+      message.set(Elements.PASSWORD, PASSWORD);
+      message.set(Elements.SESSION, SESSION);
+      message.set(Elements.SEQUENCE_NUMBER, SEQUENCE_NUMBER);
+      return message;
+    }
+
     private String expectedRequest() {
       return LoginRequest.TEMPLATE.getPacketType() 
         + USERNAME        + "   "
@@ -54,15 +63,6 @@ public class LoginRequestEncodingSpec extends Specification<LoginRequest> {
       byte[] bytes = new byte[buffer.limit()];
       buffer.get(bytes);
       return new String(bytes);
-    }
-
-    private Message loginMessage() {
-      Message message = new Message(LoginRequest.TEMPLATE);
-      message.set(Elements.USERNAME, USERNAME);
-      message.set(Elements.PASSWORD, PASSWORD);
-      message.set(Elements.SESSION, SESSION);
-      message.set(Elements.SEQUENCE_NUMBER, SEQUENCE_NUMBER);
-      return message;
     }
   }
 }
