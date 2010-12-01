@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import silvertip.Connection;
-import silvertip.protocols.FixMessageParser;
 
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -65,6 +64,10 @@ public class Login implements Command {
 
             @Override
             public void closed(Connection<Message> connection) {
+            }
+
+            @Override
+            public void garbledMessage(String message, byte[] data) {
             }
           });
       client.setConnection(connection);
