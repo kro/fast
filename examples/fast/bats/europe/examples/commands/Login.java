@@ -68,6 +68,7 @@ public class Login implements Command {
 
             @Override
             public void garbledMessage(String message, byte[] data) {
+              LOG.severe("Garbled message: " + message);
             }
           });
       client.setConnection(connection);
