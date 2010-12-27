@@ -21,6 +21,7 @@ import java.util.Map;
 
 import silvertip.MessageParser;
 import silvertip.PartialMessageException;
+import silvertip.GarbledMessageException;
 
 import fast.Dictionary;
 import fast.Message;
@@ -53,16 +54,16 @@ public class FastPitchMessageParser implements MessageParser<Message> {
   };
 
   @Override
-  public Message parse(ByteBuffer buffer) throws PartialMessageException {
+  public Message parse(ByteBuffer buffer) throws PartialMessageException, GarbledMessageException {
     return decode(buffer);
   }
 
-  private Message decode(ByteBuffer buffer) throws PartialMessageException {
+  private Message decode(ByteBuffer buffer) throws PartialMessageException, GarbledMessageException {
     PresenceMap pmap = PresenceMapFactory.create(buffer);
     String identifier = PacketType.ELEM.decode(buffer, pmap, dictionary);
     MessageTemplate template = decoders.get(identifier);
     if (template == null)
-      throw new RuntimeException("unknown template identifer: " + identifier);
+      throw new GarbledMessageException("unknown template identifer: " + identifier);
     return template.decode(buffer, pmap, dictionary);
   }
 }
