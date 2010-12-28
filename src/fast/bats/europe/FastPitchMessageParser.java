@@ -23,9 +23,7 @@ import silvertip.MessageParser;
 import silvertip.PartialMessageException;
 import silvertip.GarbledMessageException;
 
-import fast.DefaultFieldContainerFactory;
 import fast.Dictionary;
-import fast.FieldContainerFactory;
 import fast.Message;
 import fast.elements.PresenceMap;
 
@@ -55,16 +53,6 @@ public class FastPitchMessageParser implements MessageParser<Message> {
     }
   };
 
-  private FieldContainerFactory fieldContainerFactory;
-
-  public FastPitchMessageParser() {
-    this(new DefaultFieldContainerFactory());
-  }
-
-  public FastPitchMessageParser(FieldContainerFactory fieldContainerFactory) {
-    this.fieldContainerFactory = fieldContainerFactory;
-  }
-
   @Override
   public Message parse(ByteBuffer buffer) throws PartialMessageException, GarbledMessageException {
     return decode(buffer);
@@ -76,6 +64,6 @@ public class FastPitchMessageParser implements MessageParser<Message> {
     MessageTemplate template = decoders.get(identifier);
     if (template == null)
       throw new GarbledMessageException("unknown template identifer: " + identifier);
-    return template.decode(fieldContainerFactory, buffer, pmap, dictionary);
+    return template.decode(buffer, pmap, dictionary);
   }
 }

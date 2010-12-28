@@ -15,12 +15,11 @@
  */
 package fast.templates;
 
-import fast.FieldContainerFactory;
 import fast.Sequence;
 
 public class SequenceTemplate extends Template<Sequence> {
   @Override
-  protected Sequence newFieldContainer(FieldContainerFactory factory) {
+  protected Sequence newFieldContainer() {
     return new Sequence();
   }
 }
