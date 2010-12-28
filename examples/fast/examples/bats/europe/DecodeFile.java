@@ -21,6 +21,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import silvertip.PartialMessageException;
+import silvertip.GarbledMessageException;
 import fast.bats.europe.FastPitchMessageParser;
 
 public class DecodeFile {
@@ -61,6 +62,9 @@ public class DecodeFile {
         System.out.println(parser.parse(buffer));
       } catch (PartialMessageException e) {
         buffer.reset();
+        break;
+      } catch (GarbledMessageException e) {
+        e.printStackTrace();
         break;
       }
     }
