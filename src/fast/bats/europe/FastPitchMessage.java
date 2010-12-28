@@ -13,32 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fast;
+package fast.bats.europe;
 
-import java.nio.ByteBuffer;
-
-import fast.elements.Field;
+import fast.Message;
 import fast.templates.MessageTemplate;
 
-public class Message extends FieldContainer {
-  private final MessageTemplate template;
-
-  public Message(MessageTemplate template) {
-    this.template = template;
-  }
-
-  public void addSequence(Sequence seq) {
-    for (Field<?> field : seq.getFields()) {
-      values.put(field, seq.get(field));
-    }
-  }
-
-  @Override
-  public String toString() {
-    return template.getPacketType() + "(" + super.toString() + ")";
-  }
-
-  public void encode(ByteBuffer buffer, Encoder encoder) {
-    template.encode(buffer, this, encoder);
+public class FastPitchMessage extends Message {
+  public FastPitchMessage(MessageTemplate template) {
+    super(template); 
   }
 }

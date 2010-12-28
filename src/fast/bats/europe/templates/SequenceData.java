@@ -19,15 +19,17 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
-import silvertip.PartialMessageException;
 import fast.Dictionary;
 import fast.Message;
 import fast.Sequence;
 import fast.bats.europe.Elements;
+import fast.bats.europe.FastPitchMessage;
 import fast.elements.PresenceMap;
 import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 import fast.templates.SequenceTemplate;
+
+import silvertip.PartialMessageException;
 
 public class SequenceData extends MessageTemplate {
   public static final MessageTemplate TEMPLATE = new SequenceData();
@@ -57,10 +59,15 @@ public class SequenceData extends MessageTemplate {
   }
   
   @Override
-  public Message decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
-    Message message = super.decode(buffer, pmap, dictionary);
+  public FastPitchMessage decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
+    FastPitchMessage message = (FastPitchMessage) super.decode(buffer, pmap, dictionary);
     message.addSequence(marketDataSequence(buffer, pmap, message, dictionary));
     return message;
+  }
+
+  @Override
+  protected FastPitchMessage newFieldContainer() {
+    return new FastPitchMessage(this);
   }
 
   private Sequence marketDataSequence(ByteBuffer buffer, PresenceMap pmap, Message message, Dictionary dictionary)
