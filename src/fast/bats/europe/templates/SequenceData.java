@@ -21,6 +21,7 @@ import java.util.Map;
 
 import silvertip.PartialMessageException;
 import fast.Dictionary;
+import fast.FieldContainerFactory;
 import fast.Message;
 import fast.Sequence;
 import fast.bats.europe.Elements;
@@ -57,18 +58,19 @@ public class SequenceData extends MessageTemplate {
   }
   
   @Override
-  public Message decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
-    Message message = super.decode(buffer, pmap, dictionary);
-    message.addSequence(marketDataSequence(buffer, pmap, message, dictionary));
+  public Message decode(FieldContainerFactory factory, ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) 
+      throws PartialMessageException {
+    Message message = super.decode(factory, buffer, pmap, dictionary);
+    message.addSequence(marketDataSequence(factory, buffer, pmap, message, dictionary));
     return message;
   }
 
-  private Sequence marketDataSequence(ByteBuffer buffer, PresenceMap pmap, Message message, Dictionary dictionary)
+  private Sequence marketDataSequence(FieldContainerFactory factory, ByteBuffer buffer, PresenceMap pmap, Message message, Dictionary dictionary)
       throws PartialMessageException {
     SequenceTemplate template = sequenceDataTemplates.get(messageType(message));
     if (template == null)
       throw new RuntimeException("unknown message type: \"" + messageType(message) + "\"");
-    return template.decode(buffer, pmap, dictionary);
+    return template.decode(factory, buffer, pmap, dictionary);
   }
 
   private String messageType(Message message) {

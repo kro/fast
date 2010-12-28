@@ -19,6 +19,7 @@ import java.nio.ByteBuffer;
 
 import fast.Encoder;
 import fast.FieldContainer;
+import fast.FieldContainerFactory;
 import fast.Message;
 
 public class MessageTemplate extends Template<Message> {
@@ -39,7 +40,7 @@ public class MessageTemplate extends Template<Message> {
   }
 
   @Override
-  protected Message newFieldContainer() {
+  protected Message newFieldContainer(FieldContainerFactory factory) {
     return new Message(this);
   }
 }

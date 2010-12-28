@@ -23,6 +23,7 @@ import silvertip.PartialMessageException;
 import fast.Dictionary;
 import fast.Encoder;
 import fast.FieldContainer;
+import fast.FieldContainerFactory;
 import fast.elements.Field;
 import fast.elements.PresenceMap;
 
@@ -38,14 +39,15 @@ public abstract class Template<T extends FieldContainer> {
       add(field);
   }
 
-  public T decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
-    T result = newFieldContainer();
+  public T decode(FieldContainerFactory factory, ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) 
+      throws PartialMessageException {
+    T result = newFieldContainer(factory);
     for (Field<?> field : fields)
       result.set(field, field.decode(buffer, pmap, dictionary));
     return result;
   }
 
-  protected abstract T newFieldContainer();
+  protected abstract T newFieldContainer(FieldContainerFactory factory);
 
   public void encode(ByteBuffer buffer, FieldContainer container, Encoder encoder) {
     for (Field<?> field : fields)
