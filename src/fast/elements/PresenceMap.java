@@ -33,27 +33,12 @@ public class PresenceMap {
     return (pMapData[offset] & (0x40 >> (slot % 7))) != 0;
   }
 
-  public void setPresent(int slot) {
-    int offset = slot / 7;
-    if (offset >= pMapData.length)
-      throw new RuntimeException("presenceMapData too short to set slot " + slot + " present");
-    pMapData[offset] |= (0x40 >> (slot % 7));
-  }
-
-  public void setPresent(Elem<?> elem) {
-    setPresent(slots.get(elem));
-  }
-
   public boolean isPresent(Elem<?> elem) {
     return isPresent(slots.get(elem));
   }
-
+  
   public void bind(Elem<?> elem, int slot) {
     slots.put(elem, slot);
-  }
-
-  public int getBinding(Elem<?> elem) {
-    return slots.get(elem);
   }
 
   public byte[] getBytes() {
