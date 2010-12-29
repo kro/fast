@@ -19,6 +19,7 @@
     <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
   </target>
   <!-- Bread and butter -->
+  <property name="version" value="0.0.1"/>
   <property name="lib.dir" value="lib"/>
   <property name="build" location="build"/>
   <property name="main.src" location="src"/>
@@ -27,7 +28,7 @@
   <property name="test.build" location="${build}/test"/>
   <property name="examples.src" location="examples"/>
   <property name="examples.build" location="${build}/examples"/>
-  <property name="library" value="${basedir}/fast.jar"/>
+  <property name="library" value="${basedir}/fast-${version}.jar"/>
   <path id="lib.path.id">
     <fileset dir="${lib.dir}"/>
   </path>
@@ -47,7 +48,7 @@
     <mkdir dir="${test.build}"/>
     <mkdir dir="${examples.build}"/>
   </target>
-  <target name="all" depends="compile-main, compile-test, compile-examples"/>
+  <target name="all" depends="compile-main, compile-test, compile-examples, dist"/>
   <target name="compile-main" depends="init">
     <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id" debug="true"/>
   </target>
