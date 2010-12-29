@@ -19,9 +19,7 @@ package fast.bats.europe;
 
 import fast.AbstractFastSpec;
 import fast.Message;
-import fast.elements.Elem;
 import fast.elements.Field;
-import fast.elements.PresenceMap;
 import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import silvertip.PartialMessageException;
@@ -31,77 +29,42 @@ import java.nio.ByteBuffer;
 
 @RunWith(JDaveRunner.class)
 public class FastPitchMessageParserSpec extends AbstractFastSpec<FastPitchMessageParser> {
-  private static final int STOP_BIT = 0x80;
-  private static final int P_WITH_STOP_BIT = 'p' | STOP_BIT;
+    private static final int pCharWithStopBit = 240;
 
-  public class ParseTradeLongForm {
-    public void decodeSimplestTradeLongFormMessage() throws Exception {
-      byte[] pMap = constructPresenceMap(Elements.MESSAGE_TYPE);
-      byte[] bytes = toByteArray(pMap[0], P_WITH_STOP_BIT);
-      assertParsing(bytes, Elements.MESSAGE_TYPE, "p");
+    public class ParseTradeLongForm {
+        public void decodeSimplestTradeLongFormMessage() throws Exception {
+            byte[] bytes = toByteArray(0xc0, pCharWithStopBit & 0x7f);
+            assertParsing(bytes, Elements.MESSAGE_TYPE, "p");
+        }
+
+        public void decodeTradeLongFormWithSymbol1() throws Exception {
+            byte[] bytes = toByteArray(0xc4, pCharWithStopBit, 82, 69, 67, 239);
+            assertParsing(bytes, Elements.SYMBOL_1, "RECo");
+
+        }
+        public void decodeTradeLongFormWithTimeMillis() throws Exception {
+            byte[] bytes = toByteArray(0xc1, 2, 172, pCharWithStopBit);
+            assertParsing(bytes, Elements.TIME_MILLISECONDS, 300l);
+
+        }
+        public void decodeTradeLongFormWithOrderId1() throws Exception {
+            byte[] bytes = toByteArray(0xc8, pCharWithStopBit, 195);
+            assertParsing(bytes, Elements.ORDER_ID_1, "C");
+        }
+        public void decodeTradeLongFormWithOrderId4() throws Exception {
+            byte[] bytes = toByteArray(0xe0, pCharWithStopBit, 115, 189);
+            assertParsing(bytes, Elements.ORDER_ID_4, 14781l);
+
+        }
+        public void decodeTradeLongFormWithLongShares() throws Exception {
+            byte[] bytes = toByteArray(0x40, 0x0, 0x81, pCharWithStopBit, 62, 57, 160);
+            assertParsing(bytes, Elements.LONG_SHARES, Long.valueOf(1023136l));
+        }
+
+        private <T> void assertParsing(byte[] bytes, Field<T> field, T expected) 
+              throws PartialMessageException, GarbledMessageException {
+            Message parsedMessage = new FastPitchMessageParser().parse(ByteBuffer.wrap(bytes));
+            specify(parsedMessage.get(field), must.equal(expected));
+        }
     }
-
-    public void decodeTradeLongFormWithSymbol1() throws Exception {
-      byte[] pMap = constructPresenceMap(Elements.MESSAGE_TYPE, Elements.SYMBOL_1);
-      byte[] bytes = toByteArray(pMap[0], P_WITH_STOP_BIT, 'R', 'E', 'C', 'o' | STOP_BIT);
-      assertParsing(bytes, Elements.SYMBOL_1, "RECo");
-
-    }
-
-    public void decodeTradeLongFormWithTimeMillis() throws Exception {
-      byte[] pMap = constructPresenceMap(Elements.MESSAGE_TYPE, Elements.TIME_MILLISECONDS);
-      byte[] bytes = toByteArray(pMap[0], 2, 44 | STOP_BIT, P_WITH_STOP_BIT);
-      assertParsing(bytes, Elements.TIME_MILLISECONDS, (2 << 7) + 44l);
-
-    }
-
-    public void decodeTradeLongFormWithOrderId1() throws Exception {
-      byte[] pMap = constructPresenceMap(Elements.MESSAGE_TYPE, Elements.ORDER_ID_1);
-      byte[] bytes = toByteArray(pMap[0], P_WITH_STOP_BIT, 'C' | STOP_BIT);
-      assertParsing(bytes, Elements.ORDER_ID_1, "C");
-    }
-
-    public void decodeTradeLongFormWithOrderId4() throws Exception {
-      byte[] pMap = constructPresenceMap(Elements.ORDER_ID_4, Elements.MESSAGE_TYPE);
-      byte[] bytes = toByteArray(pMap[0], P_WITH_STOP_BIT, 115, 61 | STOP_BIT);
-      assertParsing(bytes, Elements.ORDER_ID_4, (115 << 7) + 61l);
-
-    }
-
-
-    public void decodeTradeLongFormWithLongShares() throws Exception {
-      byte[] pMap = constructPresenceMap(Elements.MESSAGE_TYPE, Elements.LONG_SHARES);
-      byte[] bytes = toByteArray(pMap[0], pMap[1], pMap[2], P_WITH_STOP_BIT, 62, 57, 32 | STOP_BIT);
-      assertParsing(bytes, Elements.LONG_SHARES, ((62l << 7) << 7) + (57 << 7) + 32l);
-    }
-
-    private <T> void assertParsing(byte[] bytes, Field<T> field, T expected) throws Exception {
-      Message parsedMessage = new FastPitchMessageParser().parse(ByteBuffer.wrap(bytes));
-      specify(parsedMessage.get(field), must.equal(expected));
-    }
-  }
-
-  private static byte[] constructPresenceMap(Elem... elems) throws PartialMessageException {
-    byte[] emptyData = new byte[calculateNeededPresenceMapSize(elems)];
-    stopWithStopBit(emptyData);
-    PresenceMap presenceMap = PresenceMapFactory.create(ByteBuffer.wrap(emptyData));
-    for (Elem elem : elems)
-      presenceMap.setPresent(elem);
-    byte[] bytes = presenceMap.getBytes();
-    stopWithStopBit(bytes);
-    return bytes;
-  }
-
-  private static int calculateNeededPresenceMapSize(Elem[] elems) throws PartialMessageException {
-    PresenceMap slotsMap = PresenceMapFactory.create(ByteBuffer.wrap(toByteArray(STOP_BIT)));
-    int maxSlot = 1;
-    for (Elem elem : elems) {
-      maxSlot = Math.max(maxSlot, slotsMap.getBinding(elem));
-    }
-    return (int) Math.round(Math.ceil(maxSlot / 7d));
-  }
-
-  private static void stopWithStopBit(byte[] bytes) {
-    bytes[bytes.length - 1] |= STOP_BIT;
-  }
 }
