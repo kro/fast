@@ -40,6 +40,10 @@ public class FastPitchMessage extends Message {
     return get(Elements.SYMBOL_2);
   }
 
+  public String getSide() {
+    return get(Elements.SIDE);
+  }
+
   public String getOrderId() {
     StringBuffer buf = new StringBuffer();
     buf.append(orderId1());
