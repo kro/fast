@@ -70,4 +70,19 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
       specify(msg.getLongPrice(), must.equal("18.64"));
     }
   }
+
+  public class SymbolMessage {
+    private FastPitchMessage msg;
+
+    public FastPitchMessage create() {
+      msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.SYMBOL_1, "FOOB");
+      msg.set(Elements.SYMBOL_2, "ARl");
+      return msg;
+    }
+
+    public void shouldDecodeSymbol() {
+      specify(msg.getSymbol(), must.equal("FOOBARl"));
+    }
+  }
 }

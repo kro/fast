@@ -25,6 +25,21 @@ public class FastPitchMessage extends Message {
     super(template);
   }
 
+  public String getSymbol() {
+    StringBuffer buf = new StringBuffer();
+    buf.append(symbol1());
+    buf.append(symbol2());
+    return buf.toString();
+  }
+
+  private String symbol1() {
+    return get(Elements.SYMBOL_1);
+  }
+
+  private String symbol2() {
+    return get(Elements.SYMBOL_2);
+  }
+
   public String getOrderId() {
     StringBuffer buf = new StringBuffer();
     buf.append(orderId1());
