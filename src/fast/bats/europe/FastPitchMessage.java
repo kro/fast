@@ -102,6 +102,10 @@ public class FastPitchMessage extends Message {
     return get(Elements.LONG_PRICE_4);
   }
 
+  public long getShares() {
+    return get(Elements.SHARES);
+  }
+
   private static String encodeFixedWidthBase36String(long value) {
     byte[] bytes = new byte[LONG_BASE_36_LEN];
     for (int i = bytes.length - 1; i >= 0; i--) {
