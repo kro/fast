@@ -62,8 +62,12 @@ public class FastPitchMessageParser implements MessageParser<Message> {
     PresenceMap pmap = PresenceMapFactory.create(buffer);
     String identifier = PacketType.ELEM.decode(buffer, pmap, dictionary);
     MessageTemplate template = decoders.get(identifier);
-    if (template == null)
-      throw new GarbledMessageException("unknown template identifer: " + identifier);
+    if (template == null) {
+      buffer.reset();
+      byte[] messageData = new byte[buffer.limit() - buffer.position()];
+      buffer.get(messageData);
+      throw new GarbledMessageException("unknown template identifer: " + identifier, messageData);
+    }
     return template.decode(buffer, pmap, dictionary);
   }
 }
