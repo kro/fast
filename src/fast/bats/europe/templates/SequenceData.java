@@ -29,12 +29,13 @@ import fast.soup.PacketType;
 import fast.templates.MessageTemplate;
 import fast.templates.SequenceTemplate;
 
+import fast.templates.Template;
 import silvertip.PartialMessageException;
 
 public class SequenceData extends MessageTemplate {
   public static final MessageTemplate TEMPLATE = new SequenceData();
   
-  private Map<String, SequenceTemplate> sequenceDataTemplates = new HashMap<String, SequenceTemplate>() {
+  private static final Map<String, SequenceTemplate> sequenceDataTemplates = new HashMap<String, SequenceTemplate>() {
     private static final long serialVersionUID = 1L;
     {
       put("A", AddOrder.TEMPLATE);
@@ -57,7 +58,11 @@ public class SequenceData extends MessageTemplate {
     add(Elements.TIME_MILLISECONDS);
     add(Elements.MESSAGE_TYPE);
   }
-  
+
+  public static Template<?> getTemplate(Message msg) {
+    return sequenceDataTemplates.get(messageType(msg));
+  }
+
   @Override
   public FastPitchMessage decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
     FastPitchMessage message = (FastPitchMessage) super.decode(buffer, pmap, dictionary);
@@ -78,7 +83,7 @@ public class SequenceData extends MessageTemplate {
     return template.decode(buffer, pmap, dictionary);
   }
 
-  private String messageType(Message message) {
+  private static String messageType(Message message) {
     return message.<String> get(Elements.MESSAGE_TYPE);
   }
 }
