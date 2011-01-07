@@ -29,7 +29,7 @@ public class FastPitchMessage extends Message {
     StringBuffer buf = new StringBuffer();
     buf.append(symbol1());
     buf.append(symbol2());
-    return buf.toString();
+    return buf.toString().trim();
   }
 
   private String symbol1() {
@@ -41,7 +41,7 @@ public class FastPitchMessage extends Message {
   }
 
   public String getSide() {
-    return get(Elements.SIDE);
+    return get(Elements.SIDE).trim();
   }
 
   public String getOrderId() {
@@ -50,7 +50,7 @@ public class FastPitchMessage extends Message {
     buf.append(orderId2());
     buf.append(orderId3());
     buf.append(orderId4());
-    return buf.toString();
+    return buf.toString().trim();
   }
 
   private String orderId1() {
@@ -73,7 +73,7 @@ public class FastPitchMessage extends Message {
   public String getPrice() {
     String price1 = Long.toString(get(Elements.PRICE_1));
     String price2 = get(Elements.PRICE_2);
-    return removeLeadingAndTrailingZeroes(price1 + "." + price2);
+    return removeLeadingAndTrailingZeroes(price1 + "." + price2).trim();
   }
 
   public String getLongPrice() {
@@ -83,7 +83,7 @@ public class FastPitchMessage extends Message {
     b.append(".");
     b.append(longPrice3());
     b.append(longPrice4());
-    return removeLeadingAndTrailingZeroes(b.toString());
+    return removeLeadingAndTrailingZeroes(b.toString()).trim();
   }
 
   private String longPrice1() {
