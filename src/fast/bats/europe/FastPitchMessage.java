@@ -70,6 +70,10 @@ public class FastPitchMessage extends Message {
     return encodeFixedWidthBase36String(orderId4);
   }
 
+  public boolean hasPrice() {
+    return get(Elements.PRICE_1) != null || get(Elements.PRICE_2) != null;
+  }
+
   public String getPrice() {
     String price1 = String.format("%08d", get(Elements.PRICE_1));
     String price2 = get(Elements.PRICE_2);
@@ -105,6 +109,15 @@ public class FastPitchMessage extends Message {
 
   public long getShares() {
     return get(Elements.SHARES);
+  }
+
+  @Override
+  public String toString() {
+    StringBuffer buf = new StringBuffer();
+    buf.append(super.toString());
+    if (hasPrice())
+      buf.append(" ( price = " + getPrice() + ")");
+    return buf.toString();
   }
 
   private static String encodeFixedWidthBase36String(long value) {
