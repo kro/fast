@@ -40,17 +40,16 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
   }
 
   public class PriceMessage {
-    private FastPitchMessage msg;
-
-    public FastPitchMessage create() {
-      msg = new FastPitchMessage(SequenceData.TEMPLATE);
-      msg.set(Elements.PRICE_1, 12345l);
-      msg.set(Elements.PRICE_2, "0120");
-      return msg;
+    public void shouldDecodePrice() {
+      specify(message(12345678l, "90").getPrice(), must.equal("123456.7890"));
+      specify(message(5678, "90").getPrice(), must.equal("000056.7890"));
     }
 
-    public void shouldDecodePrice() {
-      specify(msg.getPrice(), must.equal("12345.012"));
+    private FastPitchMessage message(long price1, String price2) {
+      FastPitchMessage msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.PRICE_1, price1);
+      msg.set(Elements.PRICE_2, price2);
+      return msg;
     }
   }
 

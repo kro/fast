@@ -71,9 +71,10 @@ public class FastPitchMessage extends Message {
   }
 
   public String getPrice() {
-    String price1 = Long.toString(get(Elements.PRICE_1));
+    String price1 = String.format("%08d", get(Elements.PRICE_1));
     String price2 = get(Elements.PRICE_2);
-    return removeLeadingAndTrailingZeroes(price1 + "." + price2).trim();
+    String price = price1 + price2;
+    return price.substring(0, 6) + "." + price.substring(6, 10);
   }
 
   public String getLongPrice() {
