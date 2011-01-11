@@ -34,21 +34,28 @@ import silvertip.PartialMessageException;
 
 public class SequenceData extends MessageTemplate {
   public static final MessageTemplate TEMPLATE = new SequenceData();
+
+  private static final Map<String, SequenceTemplate> longFormSequenceDataTemplates = new HashMap<String, SequenceTemplate>() {
+    private static final long serialVersionUID = 1L;
+    {
+      put("a", AddOrderLongForm.TEMPLATE);
+      put("x", OrderCancelLongForm.TEMPLATE);
+      put("e", OrderExecutedLongForm.TEMPLATE);
+      put("p", TradeLongForm.TEMPLATE);
+    }
+  };
   
   private static final Map<String, SequenceTemplate> sequenceDataTemplates = new HashMap<String, SequenceTemplate>() {
     private static final long serialVersionUID = 1L;
     {
       put("A", AddOrder.TEMPLATE);
       put("d", AddOrder.TEMPLATE);
-      put("a", AddOrderLongForm.TEMPLATE);
       put("X", OrderCancel.TEMPLATE);
-      put("x", OrderCancelLongForm.TEMPLATE);
       put("E", OrderExecuted.TEMPLATE);
-      put("e", OrderExecutedLongForm.TEMPLATE);
       put("P", Trade.TEMPLATE);
-      put("p", TradeLongForm.TEMPLATE);
       put("r", Trade.TEMPLATE);
       put("B", TradeBreak.TEMPLATE);
+      putAll(longFormSequenceDataTemplates);
     }
   };
   
@@ -61,6 +68,10 @@ public class SequenceData extends MessageTemplate {
 
   public static Template<?> getTemplate(Message msg) {
     return sequenceDataTemplates.get(messageType(msg));
+  }
+
+  public static boolean hasLongFormTemplate(Message msg) {
+    return longFormSequenceDataTemplates.containsKey(messageType(msg));
   }
 
   @Override
