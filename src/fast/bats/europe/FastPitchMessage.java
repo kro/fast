@@ -16,6 +16,7 @@
 package fast.bats.europe;
 
 import fast.Message;
+import fast.bats.europe.templates.SequenceData;
 import fast.templates.MessageTemplate;
 
 public class FastPitchMessage extends Message {
@@ -71,17 +72,29 @@ public class FastPitchMessage extends Message {
   }
 
   public boolean hasPrice() {
-    return get(Elements.PRICE_1) != null || get(Elements.PRICE_2) != null;
+    if (isLongForm())
+      return get(Elements.LONG_PRICE_1) != null;
+    return get(Elements.PRICE_1) != null;
   }
 
   public String getPrice() {
+    if (isLongForm())
+      return getLongFormPrice();
+    return getShortFormPrice();
+  }
+
+  private boolean isLongForm() {
+    return SequenceData.hasLongFormTemplate(this);
+  }
+
+  private String getShortFormPrice() {
     String price1 = String.format("%08d", get(Elements.PRICE_1));
     String price2 = get(Elements.PRICE_2);
     String price = price1 + price2;
     return price.substring(0, 6) + "." + price.substring(6, 10);
   }
 
-  public String getLongPrice() {
+  private String getLongFormPrice() {
     StringBuffer b = new StringBuffer("");
     b.append(longPrice1());
     b.append(longPrice2());

@@ -39,7 +39,7 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
     }
   }
 
-  public class PriceMessage {
+  public class ShortFormPriceMessage {
     public void shouldDecodePrice() {
       specify(message(12345678l, "90").getPrice(), must.equal("123456.7890"));
       specify(message(5678, "90").getPrice(), must.equal("000056.7890"));
@@ -47,26 +47,27 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
 
     private FastPitchMessage message(long price1, String price2) {
       FastPitchMessage msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.MESSAGE_TYPE, "A");
       msg.set(Elements.PRICE_1, price1);
       msg.set(Elements.PRICE_2, price2);
       return msg;
     }
   }
 
-  public class LongPriceMessage {
-    private FastPitchMessage msg;
-
-    public FastPitchMessage create() {
-      msg = new FastPitchMessage(SequenceData.TEMPLATE);
-      msg.set(Elements.LONG_PRICE_1, "000000");
-      msg.set(Elements.LONG_PRICE_2, 18l);
-      msg.set(Elements.LONG_PRICE_3, 6400l);
-      msg.set(Elements.LONG_PRICE_4, "000");
-      return msg;
+  public class LongFormPriceMessage {
+    public void shouldDecodePrice() {
+      specify(message("123456", 789012l, 3456l, "789").getPrice(), must.equal("123456789012.3456789"));
+      specify(message("123456", 12l, 56l, "789").getPrice(), must.equal("123456000012.0056789"));
     }
 
-    public void shouldDecodePrice() {
-      specify(msg.getLongPrice(), must.equal("18.64"));
+    private FastPitchMessage message(String price1, long price2, long price3, String price4) {
+      FastPitchMessage msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.MESSAGE_TYPE, "a");
+      msg.set(Elements.LONG_PRICE_1, price1);
+      msg.set(Elements.LONG_PRICE_2, price2);
+      msg.set(Elements.LONG_PRICE_3, price3);
+      msg.set(Elements.LONG_PRICE_4, price4);
+      return msg;
     }
   }
 
