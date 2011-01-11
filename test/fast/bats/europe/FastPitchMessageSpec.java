@@ -85,4 +85,34 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
       specify(msg.getSymbol(), must.equal("FOOBARl"));
     }
   }
+
+  public class ShortFormShares {
+    private FastPitchMessage msg;
+
+    public FastPitchMessage create() {
+      msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.MESSAGE_TYPE, "E");
+      msg.set(Elements.SHARES, 1234567l);
+      return msg;
+    }
+
+    public void shouldDecodShares() {
+      specify(msg.getShares(), must.equal(1234567l));
+    }
+  }
+
+  public class LongFormShares {
+    private FastPitchMessage msg;
+
+    public FastPitchMessage create() {
+      msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.MESSAGE_TYPE, "e");
+      msg.set(Elements.LONG_SHARES, 1234567l);
+      return msg;
+    }
+
+    public void shouldDecodShares() {
+      specify(msg.getShares(), must.equal(1234567l));
+    }
+  }
 }

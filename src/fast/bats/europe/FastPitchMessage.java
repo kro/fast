@@ -121,6 +121,8 @@ public class FastPitchMessage extends Message {
   }
 
   public long getShares() {
+    if (isLongForm())
+      return get(Elements.LONG_SHARES);
     return get(Elements.SHARES);
   }
 
