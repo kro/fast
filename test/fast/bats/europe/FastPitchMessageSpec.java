@@ -115,4 +115,22 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
       specify(msg.getShares(), must.equal(1234567l));
     }
   }
+
+  public class ExecutionId {
+    private FastPitchMessage msg;
+
+    public FastPitchMessage create() {
+      msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.MESSAGE_TYPE, "e");
+      msg.set(Elements.EXECUTION_ID_1, "2");
+      msg.set(Elements.EXECUTION_ID_2, "M");
+      msg.set(Elements.EXECUTION_ID_3, "1UOB");
+      msg.set(Elements.EXECUTION_ID_4, 477395l);
+      return msg;
+    }
+
+    public void shouldDecodeExecutionId() {
+      specify(msg.getExecutionId(), must.equal("2M1UOB00A8CZ"));
+    }
+  }
 }

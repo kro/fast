@@ -126,6 +126,32 @@ public class FastPitchMessage extends Message {
     return get(Elements.SHARES);
   }
 
+  public String getExecutionId() {
+    StringBuffer buf = new StringBuffer();
+    buf.append(executionId1());
+    buf.append(executionId2());
+    buf.append(executionId3());
+    buf.append(executionId4());
+    return buf.toString().trim();
+  }
+
+  private String executionId1() {
+    return get(Elements.EXECUTION_ID_1);
+  }
+
+  private String executionId2() {
+    return get(Elements.EXECUTION_ID_2);
+  }
+
+  private String executionId3() {
+    return get(Elements.EXECUTION_ID_3);
+  }
+
+  private String executionId4() {
+    long executionId4 = get(Elements.EXECUTION_ID_4);
+    return encodeFixedWidthBase36String(executionId4);
+  }
+
   @Override
   public String toString() {
     StringBuffer buf = new StringBuffer();
