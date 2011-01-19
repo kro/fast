@@ -31,6 +31,7 @@ import fast.templates.SequenceTemplate;
 
 import fast.templates.Template;
 import silvertip.PartialMessageException;
+import silvertip.GarbledMessageException;
 
 public class SequenceData extends MessageTemplate {
   public static final MessageTemplate TEMPLATE = new SequenceData();
@@ -75,7 +76,8 @@ public class SequenceData extends MessageTemplate {
   }
 
   @Override
-  public FastPitchMessage decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) throws PartialMessageException {
+  public FastPitchMessage decode(ByteBuffer buffer, PresenceMap pmap, Dictionary dictionary) 
+      throws PartialMessageException, GarbledMessageException {
     FastPitchMessage message = (FastPitchMessage) super.decode(buffer, pmap, dictionary);
     message.addSequence(marketDataSequence(buffer, pmap, message, dictionary));
     return message;
@@ -87,10 +89,14 @@ public class SequenceData extends MessageTemplate {
   }
 
   private Sequence marketDataSequence(ByteBuffer buffer, PresenceMap pmap, Message message, Dictionary dictionary)
-      throws PartialMessageException {
+      throws PartialMessageException, GarbledMessageException {
     SequenceTemplate template = sequenceDataTemplates.get(messageType(message));
-    if (template == null)
-      throw new RuntimeException("unknown message type: \"" + messageType(message) + "\"");
+    if (template == null) {
+      buffer.reset();
+      byte[] messageData = new byte[buffer.limit() - buffer.position()];
+      buffer.get(messageData);
+      throw new GarbledMessageException("unknown message type: \"%s\" ".format(messageType(message)), messageData);
+    }
     return template.decode(buffer, pmap, dictionary);
   }
 
