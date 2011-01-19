@@ -86,7 +86,7 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
     }
   }
 
-  public class ShortFormShares {
+  public class ShortFormSharesMessage {
     private FastPitchMessage msg;
 
     public FastPitchMessage create() {
@@ -101,7 +101,7 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
     }
   }
 
-  public class LongFormShares {
+  public class LongFormSharesMessage {
     private FastPitchMessage msg;
 
     public FastPitchMessage create() {
@@ -116,7 +116,7 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
     }
   }
 
-  public class ExecutionId {
+  public class ExecutionIdMessage {
     private FastPitchMessage msg;
 
     public FastPitchMessage create() {
