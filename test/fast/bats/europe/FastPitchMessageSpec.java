@@ -133,4 +133,20 @@ public class FastPitchMessageSpec extends Specification<FastPitchMessage> {
       specify(msg.getExecutionId(), must.equal("2M1UOB00A8CZ"));
     }
   }
+
+  public class TimestampMessage {
+    private FastPitchMessage msg;
+
+    public FastPitchMessage create() {
+      msg = new FastPitchMessage(SequenceData.TEMPLATE);
+      msg.set(Elements.MESSAGE_TYPE, "e");
+      msg.set(Elements.TIME_SECONDS, 57600l);
+      msg.set(Elements.TIME_MILLISECONDS, 123l);
+      return msg;
+    }
+
+    public void shouldDecodeTimestamp() {
+      specify(msg.getTimestamp(), must.equal(57600123l));
+    }
+  }
 }

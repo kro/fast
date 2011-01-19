@@ -152,6 +152,10 @@ public class FastPitchMessage extends Message {
     return encodeFixedWidthBase36String(executionId4);
   }
 
+  public long getTimestamp() {
+    return get(Elements.TIME_SECONDS) * 1000 + get(Elements.TIME_MILLISECONDS);
+  }
+
   @Override
   public String toString() {
     StringBuffer buf = new StringBuffer();
