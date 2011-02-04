@@ -41,7 +41,7 @@ import fast.bats.europe.templates.SequenceData;
 public class FastPitchMessageParser implements MessageParser<Message> {
   private final Dictionary dictionary = new Dictionary();
 
-  private Map<String, MessageTemplate> decoders = new HashMap<String, MessageTemplate>() {
+  private Map<String, MessageTemplate> templates = new HashMap<String, MessageTemplate>() {
     private static final long serialVersionUID = 1L;
     {
       put(PacketType.SEQUENCE_DATA, SequenceData.TEMPLATE);
@@ -61,7 +61,7 @@ public class FastPitchMessageParser implements MessageParser<Message> {
   private Message decode(ByteBuffer buffer) throws PartialMessageException, GarbledMessageException {
     PresenceMap pmap = PresenceMapFactory.create(buffer);
     String identifier = PacketType.ELEM.decode(buffer, pmap, dictionary);
-    MessageTemplate template = decoders.get(identifier);
+    MessageTemplate template = templates.get(identifier);
     if (template == null) {
       buffer.reset();
       byte[] messageData = new byte[buffer.limit() - buffer.position()];
