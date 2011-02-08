@@ -95,7 +95,7 @@ public class SequenceData extends MessageTemplate {
       buffer.reset();
       byte[] messageData = new byte[buffer.limit() - buffer.position()];
       buffer.get(messageData);
-      throw new GarbledMessageException("unknown message type: \"%s\" ".format(messageType(message)), messageData);
+      throw new GarbledMessageException("unknown message type: \"" + messageType(message) + "\"", messageData); 
     }
     return template.decode(buffer, pmap, dictionary);
   }
