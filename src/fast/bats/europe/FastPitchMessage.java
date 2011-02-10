@@ -18,6 +18,8 @@ package fast.bats.europe;
 import fast.Message;
 import fast.bats.europe.templates.SequenceData;
 import fast.templates.MessageTemplate;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 public class FastPitchMessage extends Message {
   private static final int LONG_BASE_36_LEN = 6;
@@ -154,6 +156,12 @@ public class FastPitchMessage extends Message {
 
   public long getTimestamp() {
     return get(Elements.TIME_SECONDS) * 1000 + get(Elements.TIME_MILLISECONDS);
+  }
+
+  public DateTime getDateTime() {
+    DateTimeZone timeZone = DateTimeZone.forID("Europe/London");
+    DateTime midnight = new DateTime(timeZone).toDateMidnight().toDateTime();
+    return midnight.plusMillis((int) getTimestamp());
   }
 
   @Override
