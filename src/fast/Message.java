@@ -27,6 +27,10 @@ public class Message extends FieldContainer {
     this.template = template;
   }
 
+  public MessageTemplate getTemplate() {
+    return template;
+  }
+
   public void addSequence(Sequence seq) {
     for (Field<?> field : seq.getFields()) {
       values.put(field, seq.get(field));
