@@ -30,6 +30,7 @@
   <property name="examples.src" location="examples"/>
   <property name="examples.build" location="${build}/examples"/>
   <property name="library" value="${basedir}/fast-${version}.jar"/>
+  <property name="library.src" value="${basedir}/fast-${version}-sources.jar"/>
   <path id="lib.path.id">
     <fileset dir="${lib.dir}"/>
   </path>
@@ -61,6 +62,9 @@
   <target name="dist" depends="compile-main">
     <jar destfile="${library}" basedir="${main.build}"/>
   </target>
+  <target name="dist-src">
+    <jar destfile="${library.src}" basedir="${main.src}"/>
+  </target>
   <target name="test" depends="compile-test">
     <junit printsummary="no" haltonfailure="true">
       <classpath refid="test.path.id"/>
@@ -76,5 +80,6 @@
   <target name="clean">
     <delete dir="${build}"/>
     <delete file="${library}"/>
+    <delete file="${library.src}"/>
   </target>
 </project>
