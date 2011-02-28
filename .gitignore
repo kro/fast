@@ -3,6 +3,6 @@
 /.settings
 /bin
 /build
-/fast.jar
+/fast-*.jar
 /tags
 /messages.log
